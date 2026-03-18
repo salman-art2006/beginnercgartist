@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 6%;
+    --foreground: 220 15% 85%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 220 15% 85%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 220 15% 85%;
+
+    --primary: 38 90% 55%;
+    --primary-foreground: 220 20% 6%;
+
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 220 15% 75%;
+
+    --muted: 220 15% 14%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 38 90% 55%;
+    --accent-foreground: 220 20% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 38 90% 55%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 38 90% 55%;
+    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 38 90% 55%;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --gradient-gold: linear-gradient(135deg, hsl(38 90% 55%), hsl(28 85% 45%));
+    --gradient-dark: linear-gradient(180deg, hsl(220 20% 6%) 0%, hsl(220 25% 10%) 100%);
+    --shadow-glow: 0 0 30px hsl(38 90% 55% / 0.15);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Blog prose styles */
+  .prose-blog {
+    @apply font-body text-foreground leading-relaxed;
+  }
+  .prose-blog h2 {
+    @apply font-display text-2xl font-bold text-foreground mt-10 mb-4;
+  }
+  .prose-blog h3 {
+    @apply font-display text-xl font-semibold text-foreground mt-8 mb-3;
+  }
+  .prose-blog p {
+    @apply text-muted-foreground mb-4 leading-relaxed;
+  }
+  .prose-blog ul, .prose-blog ol {
+    @apply text-muted-foreground mb-4 pl-6;
+  }
+  .prose-blog li {
+    @apply mb-2;
+  }
+  .prose-blog a {
+    @apply text-primary hover:underline;
+  }
+  .prose-blog code {
+    @apply bg-secondary text-foreground px-1.5 py-0.5 rounded text-sm;
+  }
+  .prose-blog blockquote {
+    @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground my-6;
+  }
+}

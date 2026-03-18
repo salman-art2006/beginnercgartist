@@ -1,0 +1,22 @@
+project_id = "xtjjiqabyaddmsyielne"
+
+[functions.generate-blog-image]
+verify_jwt = false
+
+[functions.auto-generate-blog]
+verify_jwt = false
+
+[functions.subscribe]
+verify_jwt = false
+
+[functions.auto-generate-portfolio]
+verify_jwt = false
+
+[functions.admin-analytics]
+verify_jwt = false
+
+[functions.send-notification]
+verify_jwt = false
+
+[functions.admin-login]
+verify_jwt = false
