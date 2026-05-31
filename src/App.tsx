@@ -8,6 +8,7 @@ import { SubscriberProvider } from "@/contexts/SubscriberContext";
 import { AdminProvider } from "@/contexts/AdminContext";
 import ContentProtection from "@/components/ContentProtection";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import ScrollToTop from "@/components/ScrollToTop";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Portfolio from "./pages/Portfolio";
@@ -45,6 +46,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
                 <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
