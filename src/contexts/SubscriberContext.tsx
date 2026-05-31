@@ -24,7 +24,7 @@ export const useSubscriber = () => {
 
 export const SubscriberProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<SubscriberState>(() => {
-    const stored = localStorage.getItem("env_art_subscriber");
+    const stored = localStorage.getItem("bcg_subscriber");
     if (stored) {
       try {
         const data = JSON.parse(stored) as SubscriberData;
@@ -41,7 +41,7 @@ export const SubscriberProvider = ({ children }: { children: ReactNode }) => {
     try {
       const result = await subscriberService.subscribe({ name, email });
       if (result.success && result.data) {
-        localStorage.setItem("env_art_subscriber", JSON.stringify(result.data));
+        localStorage.setItem("bcg_subscriber", JSON.stringify(result.data));
         setState({ isSubscribed: true, subscriber: result.data, isLoading: false, error: null });
         return true;
       }
@@ -68,7 +68,7 @@ export const SubscriberProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const logout = useCallback(() => {
-    localStorage.removeItem("env_art_subscriber");
+    localStorage.removeItem("bcg_subscriber");
     setState({ isSubscribed: false, subscriber: null, isLoading: false, error: null });
   }, []);
 
