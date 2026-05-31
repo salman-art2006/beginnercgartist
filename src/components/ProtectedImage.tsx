@@ -39,7 +39,7 @@ const ProtectedImage = ({ src, alt, className = "", watermark = false }: Protect
           <span
             className="font-display text-foreground text-4xl md:text-6xl font-bold tracking-widest rotate-[-30deg] select-none whitespace-nowrap"
           >
-            ENV.ART
+            Beginner CG Artist
           </span>
         </div>
       )}

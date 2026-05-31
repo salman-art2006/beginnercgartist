@@ -7,8 +7,8 @@ import { z } from "zod";
 import { toast } from "sonner";
 
 const socials = [
-  { icon: Instagram, label: "Instagram", href: "#", handle: "@artist", desc: "Behind-the-scenes and WIP renders" },
-  { icon: Youtube, label: "YouTube", href: "#", handle: "3D Artist", desc: "Timelapse and tutorial videos" },
+  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/beginnercg_artist/", handle: "@beginnercg_artist", desc: "Behind-the-scenes and WIP renders" },
+  { icon: Youtube, label: "YouTube", href: "https://www.youtube.com/channel/UC7CvfvvGI6ipO3rMd3dlX9Q", handle: "@beginnercg_artist", desc: "Timelapse and tutorial videos" },
   { icon: Globe, label: "ArtStation", href: "#", handle: "artist", desc: "High-res portfolio and breakdowns" },
   { icon: Mail, label: "Email", href: "mailto:hello@artist.com", handle: "hello@artist.com", desc: "Direct communication" },
 ];
@@ -156,7 +156,7 @@ const Contact = () => {
             <p className="text-muted-foreground font-body text-lg mb-4 leading-relaxed">
               I'm always interested in creative collaborations — whether it's contributing environment art to a game project, creating visuals for a film, or co-creating educational content with fellow artists. If you have an idea, let's talk.
             </p>
-            <p className="text-muted-foreground/50 text-sm font-body">© {new Date().getFullYear()} ENV.ART. Built with passion.</p>
+            <p className="text-muted-foreground/50 text-sm font-body">© {new Date().getFullYear()} Beginner CG Artist. Built with passion.</p>
           </motion.div>
         </div>
       </section>

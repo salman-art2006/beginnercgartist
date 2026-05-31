@@ -83,7 +83,7 @@ const AdminSettings = () => {
           <div className="space-y-4">
             <div>
               <p className="text-xs text-muted-foreground font-body mb-1">Site Name</p>
-              <p className="font-display text-sm font-medium text-foreground">ENV.ART — 3D Environment Artist</p>
+              <p className="font-display text-sm font-medium text-foreground">Beginner CG Artist — 3D Environment Artist</p>
             </div>
             <div>
               <p className="text-xs text-muted-foreground font-body mb-1">Stack</p>

@@ -52,8 +52,8 @@ const AdminSubscribers = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {(subStats?.recentSubscribers || []).map((sub, i) => (
-              <tr key={i} className="hover:bg-secondary/50 transition-colors">
+            {(subStats?.recentSubscribers || []).map((sub) => (
+              <tr key={sub.email} className="hover:bg-secondary/50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">

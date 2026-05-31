@@ -13,10 +13,14 @@ const AdminPortfolio = () => {
 
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
-    await portfolioService.delete(id);
-    queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
-    queryClient.invalidateQueries({ queryKey: ["portfolio-projects"] });
-    toast.success(`"${title}" deleted`);
+    try {
+      await portfolioService.delete(id);
+      queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
+      queryClient.invalidateQueries({ queryKey: ["portfolio-projects"] });
+      toast.success(`"${title}" deleted`);
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Delete failed");
+    }
   };
 
   const handleGenerate = async () => {
@@ -42,6 +46,7 @@ const AdminPortfolio = () => {
         </div>
         <div className="flex items-center gap-3">
           <button
+            type="button"
             onClick={handleGenerate}
             disabled={generating}
             className="bg-primary/10 text-primary font-display font-semibold px-5 py-2.5 rounded-lg hover:bg-primary/20 transition-colors flex items-center gap-2 text-sm border border-primary/20"
@@ -102,13 +107,13 @@ const AdminPortfolio = () => {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <Link to={`/portfolio/${p.id}`} className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-foreground">
+                    <Link to={`/portfolio/${p.id}`} aria-label="View project" className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-foreground">
                       <ExternalLink className="w-4 h-4" />
                     </Link>
-                    <Link to={`/admin/portfolio/edit/${p.id}`} className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-foreground">
+                    <Link to={`/admin/portfolio/edit/${p.id}`} aria-label="Edit project" className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-foreground">
                       <Pencil className="w-4 h-4" />
                     </Link>
-                    <button onClick={() => handleDelete(p.id, p.title)} className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-destructive">
+                    <button type="button" aria-label="Delete project" onClick={() => handleDelete(p.id, p.title)} className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-destructive">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

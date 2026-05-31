@@ -2,7 +2,8 @@ import Layout from "@/components/Layout";
 import PageMeta from "@/components/PageMeta";
 import SubscribeForm from "@/components/SubscribeForm";
 import { useSubscriber } from "@/contexts/SubscriberContext";
-import { portfolioProjects } from "@/data/portfolioData";
+import { portfolioService } from "@/services/portfolioService";
+import { useQuery } from "@tanstack/react-query";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
@@ -40,7 +41,12 @@ const Resources = () => {
   const faqInView = useInView(faqRef, { once: true, margin: "-50px" });
 
   const { isSubscribed } = useSubscriber();
-  const downloadableProjects = portfolioProjects.filter((p) => p.downloadFileId);
+
+  const { data: allProjects } = useQuery({
+    queryKey: ["resources-portfolio"],
+    queryFn: () => portfolioService.list(),
+  });
+  const downloadableProjects = (allProjects ?? []).filter((p) => p.downloadFileId);
 
   return (
     <Layout>

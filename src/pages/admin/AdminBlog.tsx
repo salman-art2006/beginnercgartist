@@ -32,6 +32,7 @@ const AdminBlog = () => {
           <p className="text-muted-foreground font-body mt-1">Manage blog content and automation</p>
         </div>
         <button
+          type="button"
           onClick={handleGenerate}
           disabled={generating}
           className="bg-primary/10 text-primary font-display font-semibold px-5 py-2.5 rounded-lg hover:bg-primary/20 transition-colors flex items-center gap-2 text-sm border border-primary/20"

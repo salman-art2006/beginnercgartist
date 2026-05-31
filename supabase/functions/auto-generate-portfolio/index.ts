@@ -86,6 +86,16 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    const authHeader = req.headers.get("Authorization");
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader?.replace("Bearer ", "") ?? ""
+    );
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // Pick a random topic
     const catGroup = PORTFOLIO_TOPICS[Math.floor(Math.random() * PORTFOLIO_TOPICS.length)];
     const theme = catGroup.themes[Math.floor(Math.random() * catGroup.themes.length)];

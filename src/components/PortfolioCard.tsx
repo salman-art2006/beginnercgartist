@@ -3,7 +3,7 @@ import { Lock, Download, Loader2, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useSubscriber } from "@/contexts/SubscriberContext";
 import { useNavigate, Link } from "react-router-dom";
-import type { PortfolioProject } from "@/data/portfolioData";
+import type { PortfolioProject } from "@/services/portfolioService";
 import { toast } from "sonner";
 
 interface Props {

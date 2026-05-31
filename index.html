@@ -3,36 +3,129 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ENV.ART — 3D Environment Artist | Blender Portfolio & Project Files</title>
-    <meta name="description" content="Independent 3D Environment Artist creating cinematic digital worlds in Blender. Subscribe for free project files, workflow breakdowns, and learning resources." />
-    <meta name="author" content="ENV.ART" />
-    <link rel="canonical" href="https://envart.com/" />
+
+    <!-- ── Primary SEO ──────────────────────────────────────────── -->
+    <title>Beginner CG Artist — 3D Environment Artist | Blender Portfolio & Tutorials</title>
+    <meta name="description" content="Independent 3D environment artist creating cinematic digital worlds in Blender. Free project files, workflow breakdowns, tutorials, and learning resources for environment artists." />
+    <meta name="author" content="Beginner CG Artist" />
+    <meta name="keywords" content="3D environment art, Blender, environment artist, 3D renders, Blender tutorials, Cycles render, portfolio, free Blender files, procedural materials, cinematic lighting" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
-    <meta property="og:title" content="ENV.ART — 3D Environment Artist" />
-    <meta property="og:description" content="Cinematic 3D environments in Blender. Free project files for subscribers." />
+    <!-- ── Open Graph (Facebook, Discord, LinkedIn) ─────────────── -->
+    <meta property="og:site_name" content="Beginner CG Artist" />
+    <meta property="og:title" content="Beginner CG Artist — 3D Environment Artist" />
+    <meta property="og:description" content="Cinematic 3D environments in Blender. Free project files, tutorials, and workflow breakdowns for environment artists." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://envart.com/" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Beginner CG Artist — 3D Environment Art Portfolio" />
+    <meta property="og:locale" content="en_GB" />
 
+    <!-- ── Twitter / X ───────────────────────────────────────────── -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ENV.ART — 3D Environment Artist" />
-    <meta name="twitter:description" content="Cinematic 3D environments in Blender. Free project files for subscribers." />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="Beginner CG Artist — 3D Environment Artist" />
+    <meta name="twitter:description" content="Cinematic 3D environments in Blender. Free project files and tutorials." />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og-default.jpg" />
+    <meta name="twitter:image:alt" content="Beginner CG Artist — 3D Environment Art Portfolio" />
 
+    <!-- ── Favicons ───────────────────────────────────────────────── -->
+    <link rel="icon" type="image/png" href="/favicon-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#D4AF37" />
+
+    <!-- ── Performance hints ─────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="%VITE_SUPABASE_URL%" />
+
+    <!-- ── Structured Data — Person + WebSite + BreadcrumbList ───── -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "ENV.ART",
-      "jobTitle": "3D Environment Artist",
-      "url": "https://envart.com",
-      "description": "Independent 3D Environment Artist creating cinematic digital worlds in Blender."
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "%VITE_SITE_URL%/#artist",
+          "name": "Beginner CG Artist",
+          "jobTitle": "3D Environment Artist",
+          "url": "%VITE_SITE_URL%",
+          "description": "Independent 3D environment artist creating cinematic digital worlds in Blender. Sharing tutorials, workflow breakdowns, and free project files.",
+          "knowsAbout": ["Blender", "3D Environment Art", "Procedural Materials", "Cinematic Lighting", "EEVEE", "Cycles Renderer", "Geometry Nodes", "PBR Texturing"],
+          "sameAs": []
+        },
+        {
+          "@type": "WebSite",
+          "@id": "%VITE_SITE_URL%/#website",
+          "url": "%VITE_SITE_URL%",
+          "name": "Beginner CG Artist",
+          "description": "3D Environment Art portfolio, tutorials, and free Blender project files",
+          "publisher": { "@id": "%VITE_SITE_URL%/#artist" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": { "@type": "EntryPoint", "urlTemplate": "%VITE_SITE_URL%/blog?search={search_term_string}" },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "CreativeWorkSeries",
+          "@id": "%VITE_SITE_URL%/#portfolio",
+          "name": "Beginner CG Artist Portfolio",
+          "description": "Collection of 3D environment art renders created in Blender",
+          "creator": { "@id": "%VITE_SITE_URL%/#artist" },
+          "url": "%VITE_SITE_URL%/portfolio"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "@id": "%VITE_SITE_URL%/#edu",
+          "name": "Beginner CG Artist Tutorials",
+          "description": "Free Blender tutorials and educational resources for environment artists",
+          "url": "%VITE_SITE_URL%/tutorials",
+          "teaches": "Blender 3D Environment Art"
+        }
+      ]
     }
+    </script>
+
+    <!-- ── Google Analytics 4 ────────────────────────────────────── -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA4_ID%"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '%VITE_GA4_ID%', {
+        page_path: window.location.pathname,
+        anonymize_ip: true,
+        cookie_flags: 'SameSite=None;Secure'
+      });
+    </script>
+
+    <!-- ── Facebook Pixel ────────────────────────────────────────── -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '%VITE_FB_PIXEL_ID%');
+      fbq('track', 'PageView');
     </script>
   </head>
 
   <body>
+    <!-- Facebook Pixel noscript fallback (must be in body, not head) -->
+    <noscript>
+      <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=%VITE_FB_PIXEL_ID%&ev=PageView&noscript=1" />
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

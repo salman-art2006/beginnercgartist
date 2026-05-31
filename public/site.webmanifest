@@ -1,0 +1,13 @@
+{
+  "name": "Beginner CG Artist — 3D Environment Artist",
+  "short_name": "BeginnerCG",
+  "description": "Cinematic 3D environments in Blender. Portfolio, tutorials, and free project files.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#D4AF37",
+  "icons": [
+    { "src": "/favicon-icon.png", "sizes": "any",     "type": "image/png"     },
+    { "src": "/favicon.svg",      "sizes": "any",     "type": "image/svg+xml" }
+  ]
+}

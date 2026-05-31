@@ -1,14 +1,21 @@
-/**
- * Blog Service — reads from Supabase database, falls back to seed data.
- * Edge functions handle writes (auto-generation).
- */
-
 import { supabase } from "@/integrations/supabase/client";
-import { seedBlogPosts } from "@/data/blogSeedData";
 import type { BlogPost, BlogListParams, BlogListResult, BlogCategory } from "@/data/blogTypes";
 
-/** Map a database row to the BlogPost interface */
-function mapRow(row: any): BlogPost {
+type BlogRow = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  featured_image: string;
+  category: string;
+  tags: string[];
+  published_at: string;
+  author: string;
+  read_time_minutes: number;
+};
+
+function mapRow(row: BlogRow): BlogPost {
   return {
     id: row.id,
     slug: row.slug,
@@ -28,7 +35,7 @@ export const blogService = {
   async list(params: BlogListParams = {}): Promise<BlogListResult> {
     const { category, page = 1, perPage = 9, search } = params;
 
-    let dbPosts: BlogPost[] = [];
+    let allPosts: BlogPost[] = [];
     try {
       const { data, error } = await supabase
         .from("blog_posts")
@@ -36,18 +43,12 @@ export const blogService = {
         .order("published_at", { ascending: false });
 
       if (!error && data) {
-        dbPosts = data.map(mapRow);
+        allPosts = (data as BlogRow[]).map(mapRow);
       }
-    } catch (err) {
-      console.warn("Blog DB query failed, using seed data:", err);
+    } catch {
+      // return empty on failure
     }
 
-    // Merge: DB posts first, then seed posts not already in DB
-    const dbSlugs = new Set(dbPosts.map((p) => p.slug));
-    const seedOnly = seedBlogPosts.filter((p) => !dbSlugs.has(p.slug));
-    let allPosts = [...dbPosts, ...seedOnly];
-
-    // Apply filters
     if (category) allPosts = allPosts.filter((p) => p.category === category);
     if (search) {
       const q = search.toLowerCase();
@@ -72,12 +73,11 @@ export const blogService = {
         .maybeSingle();
 
       if (error) throw error;
-      if (data) return mapRow(data);
-    } catch (err) {
-      console.warn("Blog DB slug query failed, using seed data:", err);
+      if (data) return mapRow(data as BlogRow);
+    } catch {
+      // fall through
     }
-
-    return seedBlogPosts.find((p) => p.slug === slug) || null;
+    return null;
   },
 
   async getLatest(count: number = 3): Promise<BlogPost[]> {
@@ -86,11 +86,10 @@ export const blogService = {
   },
 
   async getCategories(): Promise<{ category: BlogCategory; count: number }[]> {
-    // Use the merged list to get accurate counts
     const result = await this.list({ perPage: 1000 });
     const counts = new Map<string, number>();
     for (const post of result.posts) {
-      counts.set(post.category, (counts.get(post.category) || 0) + 1);
+      counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
     }
     return Array.from(counts.entries()).map(([category, count]) => ({
       category: category as BlogCategory,
@@ -98,14 +97,12 @@ export const blogService = {
     }));
   },
 
-  /** Trigger the auto-generate-blog edge function */
-  async triggerAutoGenerate(): Promise<{ success: boolean; post?: any; error?: string }> {
+  async triggerAutoGenerate(): Promise<{ success: boolean; post?: BlogPost; error?: string }> {
     try {
       const { data, error } = await supabase.functions.invoke("auto-generate-blog");
       if (error) throw error;
-      return data;
+      return data as { success: boolean; post?: BlogPost; error?: string };
     } catch (err) {
-      console.error("Auto-generate failed:", err);
       return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
     }
   },

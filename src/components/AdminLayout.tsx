@@ -24,7 +24,10 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen bg-background flex">
       <aside className="w-64 bg-card border-r border-border flex flex-col">
         <div className="p-6 border-b border-border">
-          <Link to="/" className="font-display text-lg font-bold text-gradient-gold">ENV.ART</Link>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/favicon-icon.png" alt="Beginner CG Artist" className="w-7 h-7 object-contain" />
+            <span className="font-display text-lg font-bold text-gradient-gold">Beginner CG Artist</span>
+          </Link>
           <p className="text-muted-foreground text-xs font-body mt-1">Admin Panel</p>
         </div>
         <nav className="flex-1 p-4 space-y-1">
@@ -42,7 +45,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           <Link to="/" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-body text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Site
           </Link>
-          <button onClick={logout} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-body text-muted-foreground hover:text-destructive hover:bg-secondary transition-colors w-full text-left">
+          <button type="button" onClick={logout} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-body text-muted-foreground hover:text-destructive hover:bg-secondary transition-colors w-full text-left">
             <LogOut className="w-4 h-4" /> Sign Out
           </button>
         </div>

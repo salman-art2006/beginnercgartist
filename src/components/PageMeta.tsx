@@ -9,8 +9,8 @@ interface Props {
   jsonLd?: Record<string, any>;
 }
 
-const SITE_NAME = "ENV.ART — 3D Environment Artist";
-const BASE_URL = "https://envart.com";
+const SITE_NAME = "Beginner CG Artist — 3D Environment Artist";
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://beginnercgartist.com";
 
 const PageMeta = ({ title, description, path, image, type = "website", jsonLd }: Props) => {
   const fullTitle = `${title} | ${SITE_NAME}`;
@@ -24,8 +24,8 @@ const PageMeta = ({ title, description, path, image, type = "website", jsonLd }:
     description,
     url,
     ...(type === "article" && {
-      author: { "@type": "Person", name: "ENV.ART" },
-      publisher: { "@type": "Organization", name: "ENV.ART", logo: { "@type": "ImageObject", url: `${BASE_URL}/favicon.ico` } },
+      author: { "@type": "Person", name: "Beginner CG Artist" },
+      publisher: { "@type": "Organization", name: "Beginner CG Artist", logo: { "@type": "ImageObject", url: `${BASE_URL}/favicon.ico` } },
     }),
     ...jsonLd,
   };
