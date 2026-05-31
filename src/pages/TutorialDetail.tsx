@@ -59,7 +59,7 @@ const TutorialDetail = () => {
             </motion.div>
           )}
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="prose-blog" dangerouslySetInnerHTML={{ __html: tutorial.content }} />
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="prose-blog" dangerouslySetInnerHTML={{ __html: tutorial.content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "") }} />
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="mt-12 bg-card border border-border rounded-xl p-8 text-center shadow-card">
             <BookOpen className="w-8 h-8 text-primary mx-auto mb-3" />

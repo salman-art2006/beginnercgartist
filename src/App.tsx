@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SubscriberProvider } from "@/contexts/SubscriberContext";
 import { AdminProvider } from "@/contexts/AdminContext";
 import ContentProtection from "@/components/ContentProtection";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Portfolio from "./pages/Portfolio";
@@ -34,6 +35,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
+  <ErrorBoundary>
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -44,30 +46,29 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/portfolio/:id" element={<PortfolioDetail />} />
-                <Route path="/workflow" element={<Workflow />} />
-                <Route path="/resources" element={<Resources />} />
-                <Route path="/library" element={<ResourceLibrary />} />
-                <Route path="/tutorials" element={<Tutorials />} />
-                <Route path="/tutorials/:slug" element={<TutorialDetail />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/contact" element={<Contact />} />
-                {/* Admin routes */}
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/portfolio" element={<AdminPortfolio />} />
-                <Route path="/admin/portfolio/new" element={<AdminPortfolioForm />} />
-                <Route path="/admin/portfolio/edit/:id" element={<AdminPortfolioForm />} />
-                <Route path="/admin/blog" element={<AdminBlog />} />
-                <Route path="/admin/tutorials" element={<AdminTutorials />} />
-                <Route path="/admin/emails" element={<AdminEmails />} />
-                <Route path="/admin/resources" element={<AdminResources />} />
-                <Route path="/admin/subscribers" element={<AdminSubscribers />} />
-                <Route path="/admin/settings" element={<AdminSettings />} />
+                <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
+                <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
+                <Route path="/portfolio" element={<ErrorBoundary><Portfolio /></ErrorBoundary>} />
+                <Route path="/portfolio/:id" element={<ErrorBoundary><PortfolioDetail /></ErrorBoundary>} />
+                <Route path="/workflow" element={<ErrorBoundary><Workflow /></ErrorBoundary>} />
+                <Route path="/resources" element={<ErrorBoundary><Resources /></ErrorBoundary>} />
+                <Route path="/library" element={<ErrorBoundary><ResourceLibrary /></ErrorBoundary>} />
+                <Route path="/tutorials" element={<ErrorBoundary><Tutorials /></ErrorBoundary>} />
+                <Route path="/tutorials/:slug" element={<ErrorBoundary><TutorialDetail /></ErrorBoundary>} />
+                <Route path="/blog" element={<ErrorBoundary><Blog /></ErrorBoundary>} />
+                <Route path="/blog/:slug" element={<ErrorBoundary><BlogPost /></ErrorBoundary>} />
+                <Route path="/contact" element={<ErrorBoundary><Contact /></ErrorBoundary>} />
+                <Route path="/admin/login" element={<ErrorBoundary><AdminLogin /></ErrorBoundary>} />
+                <Route path="/admin" element={<ErrorBoundary><AdminDashboard /></ErrorBoundary>} />
+                <Route path="/admin/portfolio" element={<ErrorBoundary><AdminPortfolio /></ErrorBoundary>} />
+                <Route path="/admin/portfolio/new" element={<ErrorBoundary><AdminPortfolioForm /></ErrorBoundary>} />
+                <Route path="/admin/portfolio/edit/:id" element={<ErrorBoundary><AdminPortfolioForm /></ErrorBoundary>} />
+                <Route path="/admin/blog" element={<ErrorBoundary><AdminBlog /></ErrorBoundary>} />
+                <Route path="/admin/tutorials" element={<ErrorBoundary><AdminTutorials /></ErrorBoundary>} />
+                <Route path="/admin/emails" element={<ErrorBoundary><AdminEmails /></ErrorBoundary>} />
+                <Route path="/admin/resources" element={<ErrorBoundary><AdminResources /></ErrorBoundary>} />
+                <Route path="/admin/subscribers" element={<ErrorBoundary><AdminSubscribers /></ErrorBoundary>} />
+                <Route path="/admin/settings" element={<ErrorBoundary><AdminSettings /></ErrorBoundary>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
@@ -76,6 +77,7 @@ const App = () => (
       </TooltipProvider>
     </QueryClientProvider>
   </HelmetProvider>
+  </ErrorBoundary>
 );
 
 export default App;

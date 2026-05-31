@@ -6,11 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Lock, Download, Loader2, Cpu, Clock, Box, Maximize } from "lucide-react";
-import { useState, lazy, Suspense } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import ProtectedImage from "@/components/ProtectedImage";
-
-const Scene3DViewer = lazy(() => import("@/components/Scene3DViewer"));
 
 const PortfolioDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -126,20 +124,6 @@ const PortfolioDetail = () => {
               )}
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Interactive 3D Viewer */}
-      <section className="py-16 bg-card/50">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
-              Interactive <span className="text-gradient-gold">3D Preview</span>
-            </h2>
-            <Suspense fallback={<div className="aspect-[4/3] rounded-xl bg-secondary border border-border flex items-center justify-center"><Loader2 className="w-8 h-8 text-primary animate-spin" /></div>}>
-              <Scene3DViewer />
-            </Suspense>
-          </motion.div>
         </div>
       </section>
 
