@@ -85,7 +85,7 @@ const Scene3DViewer = ({ className = "", accentColor = "#d4940a" }: Scene3DViewe
       </Canvas>
       {/* Watermark overlay */}
       <div className="absolute inset-0 z-10 pointer-events-none flex items-end justify-end p-3">
-        <span className="text-foreground/[0.08] font-display text-xs tracking-widest select-none">ENV.ART</span>
+        <span className="text-foreground/[0.08] font-display text-xs tracking-widest select-none">Beginner CG Artist</span>
       </div>
       <div className="absolute bottom-3 left-3 z-20 bg-background/80 backdrop-blur-sm text-muted-foreground text-xs font-body px-3 py-1.5 rounded-lg border border-border">
         Drag to rotate · Scroll to zoom

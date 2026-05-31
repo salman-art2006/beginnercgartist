@@ -8,7 +8,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { writeFileSync } from "fs";
 
-const SITE_URL = "https://beginnercgartist.com";
+const SITE_URL = process.env.VITE_SITE_URL || "https://beginnercgartist.com";
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;

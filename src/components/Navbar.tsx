@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const links = [
@@ -37,11 +37,12 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between h-16">
-        <Link to="/" className="font-display text-lg font-bold text-gradient-gold">
-          ENV.ART
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/favicon-icon.png" alt="Beginner CG Artist" className="w-8 h-8 object-contain" />
+          <span className="font-display text-lg font-bold text-gradient-gold">Beginner CG Artist</span>
         </Link>
 
-        {/* Desktop */}
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <Link
@@ -58,8 +59,20 @@ const Navbar = () => {
           ))}
         </div>
 
+        {/* Desktop CTA — Shop on Gumroad */}
+        <a
+          href="https://beginnercgartist.gumroad.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:flex items-center gap-1.5 border border-primary/60 text-primary font-display font-semibold text-sm px-4 py-1.5 rounded-lg hover:bg-primary/10 transition-colors"
+        >
+          <ShoppingBag className="w-3.5 h-3.5" />
+          Shop
+        </a>
+
         {/* Mobile toggle */}
         <button
+          type="button"
           onClick={() => setOpen(!open)}
           className="md:hidden text-foreground"
           aria-label="Toggle menu"
@@ -89,6 +102,15 @@ const Navbar = () => {
                 {l.label}
               </Link>
             ))}
+            <a
+              href="https://beginnercgartist.gumroad.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm font-display font-semibold text-primary border border-primary/40 px-4 py-2 rounded-lg w-fit"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              Shop on Gumroad
+            </a>
           </div>
         </motion.div>
       )}

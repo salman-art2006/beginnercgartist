@@ -1,5 +1,5 @@
 -- =============================================================================
--- ENV.ART — Initial Database Schema
+-- Beginner CG Artist — Initial Database Schema
 -- Run this in: Supabase Dashboard → SQL Editor → New query → Run
 -- =============================================================================
 
@@ -24,7 +24,7 @@ create table if not exists public.blog_posts (
   featured_image     text        not null default '',
   category           text        not null default 'Blender',
   tags               text[]      not null default '{}',
-  author             text        not null default 'ENV.ART',
+  author             text        not null default 'Beginner CG Artist',
   read_time_minutes  integer     not null default 5,
   published_at       timestamptz not null default now(),
   created_at         timestamptz not null default now(),

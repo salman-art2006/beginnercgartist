@@ -1,8 +1,8 @@
-# ENV.ART — 3D Environment Artist
+# Beginner CG Artist — 3D Environment Artist
 
 > Independent 3D environment artist creating cinematic digital worlds in Blender. Specialising in photoreal scenes, lighting, and procedural techniques.
 
-ENV.ART is a portfolio and educational resource site for Blender 3D environment art. The site is run by a solo artist sharing workflows, tutorials, and downloadable project files with the community.
+Beginner CG Artist is a portfolio and educational resource site for Blender 3D environment art. The site is run by a solo artist sharing workflows, tutorials, and downloadable project files with the community.
 
 ## Content
 
@@ -11,7 +11,7 @@ ENV.ART is a portfolio and educational resource site for Blender 3D environment 
 - [Tutorials](/tutorials) — Step-by-step learning guides for beginners through advanced artists
 - [Resources](/resources) — Curated collection of free tools, assets, and references for 3D artists
 - [Workflow](/workflow) — Documented end-to-end environment art process from concept to final render
-- [About](/about) — Background on the artist and the mission of ENV.ART
+- [About](/about) — Background on the artist and the mission of Beginner CG Artist
 
 ## Topics Covered
 

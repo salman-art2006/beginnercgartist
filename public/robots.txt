@@ -1,4 +1,4 @@
-# ENV.ART — Robots.txt
+# Beginner CG Artist — Robots.txt
 # https://beginnercgartist.com
 
 # ── Search engines ──────────────────────────────────────────────

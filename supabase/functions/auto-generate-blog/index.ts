@@ -248,7 +248,7 @@ Requirements:
         featured_image: featuredImage,
         category,
         tags: blogContent.tags || [],
-        author: "ENV.ART",
+        author: "Beginner CG Artist",
         read_time_minutes: blogContent.readTimeMinutes || 5,
         published_at: new Date().toISOString(),
       })
