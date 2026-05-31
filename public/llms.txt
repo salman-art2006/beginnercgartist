@@ -1,0 +1,26 @@
+# ENV.ART — 3D Environment Artist
+
+> Independent 3D environment artist creating cinematic digital worlds in Blender. Specialising in photoreal scenes, lighting, and procedural techniques.
+
+ENV.ART is a portfolio and educational resource site for Blender 3D environment art. The site is run by a solo artist sharing workflows, tutorials, and downloadable project files with the community.
+
+## Content
+
+- [Portfolio](/portfolio) — Showcase of completed 3D environment renders with full workflow breakdowns, tools used, and technical specs
+- [Blog](/blog) — In-depth articles on Blender techniques, environment art workflows, lighting, materials, and scene composition
+- [Tutorials](/tutorials) — Step-by-step learning guides for beginners through advanced artists
+- [Resources](/resources) — Curated collection of free tools, assets, and references for 3D artists
+- [Workflow](/workflow) — Documented end-to-end environment art process from concept to final render
+- [About](/about) — Background on the artist and the mission of ENV.ART
+
+## Topics Covered
+
+Blender, environment art, 3D rendering, Cycles, EEVEE, procedural materials, shader nodes, geometry nodes, vegetation scattering, cinematic lighting, HDRI, volumetrics, PBR texturing, UV unwrapping, Blender addons, render optimisation, portfolio building for 3D artists
+
+## Audience
+
+Beginner to intermediate 3D artists learning environment art in Blender. Artists looking for free project files, scene breakdowns, and practical workflow guides.
+
+## Contact
+
+Available via the contact form at /contact

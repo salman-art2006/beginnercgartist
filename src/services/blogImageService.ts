@@ -26,19 +26,10 @@ export const blogImageService = {
         { body: params }
       );
 
-      if (error) {
-        console.error("Blog image generation error:", error);
-        return null;
-      }
-
-      if (data?.error) {
-        console.error("Blog image generation failed:", data.error);
-        return null;
-      }
+      if (error || data?.error) return null;
 
       return data?.imageUrl || null;
-    } catch (err) {
-      console.error("Blog image generation exception:", err);
+    } catch {
       return null;
     }
   },

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 const AdminLogin = () => {
   const { isAuthenticated, login } = useAdmin();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,11 +15,11 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!password.trim()) { setError("Password is required"); return; }
+    if (!email.trim() || !password.trim()) { setError("Email and password are required"); return; }
     setLoading(true);
     setError("");
-    const ok = await login(password);
-    if (!ok) setError("Invalid password");
+    const ok = await login(email, password);
+    if (!ok) setError("Invalid email or password");
     setLoading(false);
   };
 
@@ -30,9 +31,16 @@ const AdminLogin = () => {
             <Lock className="w-7 h-7 text-primary" />
           </div>
           <h1 className="font-display text-2xl font-bold text-foreground">Admin Access</h1>
-          <p className="text-muted-foreground text-sm font-body mt-2">Enter the admin password to continue</p>
+          <p className="text-muted-foreground text-sm font-body mt-2">Sign in with your admin credentials</p>
         </div>
         <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl p-6 shadow-card">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full bg-secondary border border-border rounded-lg px-4 py-3 text-foreground font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow mb-3"
+          />
           <input
             type="password"
             value={password}

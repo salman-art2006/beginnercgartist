@@ -46,7 +46,7 @@ const AdminDashboard = () => {
           <h1 className="font-display text-3xl font-bold text-foreground">Dashboard</h1>
           <p className="text-muted-foreground font-body mt-1">Manage your content and resources</p>
         </div>
-        <button onClick={handleNotifySubscribers} disabled={notifying}
+        <button type="button" onClick={handleNotifySubscribers} disabled={notifying}
           className="bg-primary/10 text-primary font-display font-semibold px-5 py-2.5 rounded-lg hover:bg-primary/20 transition-colors flex items-center gap-2 text-sm border border-primary/20">
           {notifying ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
           Notify Subscribers
@@ -97,8 +97,8 @@ const AdminDashboard = () => {
             <span className="text-xs text-muted-foreground font-body">{subStats?.total || 0} total</span>
           </div>
           <div className="divide-y divide-border">
-            {(subStats?.recentSubscribers || []).slice(0, 5).map((sub, i) => (
-              <div key={i} className="p-4 flex items-center gap-4">
+            {(subStats?.recentSubscribers || []).slice(0, 5).map((sub) => (
+              <div key={sub.email} className="p-4 flex items-center gap-4">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-primary font-display text-xs font-bold">{sub.name.charAt(0).toUpperCase()}</span>
                 </div>

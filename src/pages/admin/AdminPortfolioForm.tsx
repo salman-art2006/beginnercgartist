@@ -1,5 +1,5 @@
 import AdminLayout from "@/components/AdminLayout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { portfolioService } from "@/services/portfolioService";
@@ -30,19 +30,19 @@ const AdminPortfolioForm = () => {
     downloadFileName: "",
   });
 
-  // Populate form when editing
-  const populated = isEdit && existing && form.title === "";
-  if (populated && existing) {
-    setForm({
-      title: existing.title,
-      category: existing.category,
-      description: existing.description,
-      longDescription: existing.longDescription,
-      tools: existing.tools.join(", "),
-      software: existing.software.join(", "),
-      downloadFileName: existing.downloadFileName || "",
-    });
-  }
+  useEffect(() => {
+    if (isEdit && existing && form.title === "") {
+      setForm({
+        title: existing.title,
+        category: existing.category,
+        description: existing.description,
+        longDescription: existing.longDescription,
+        tools: existing.tools.join(", "),
+        software: existing.software.join(", "),
+        downloadFileName: existing.downloadFileName || "",
+      });
+    }
+  }, [existing, isEdit]);
 
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -56,32 +56,37 @@ const AdminPortfolioForm = () => {
     }
 
     setSaving(true);
-    const projectData = {
-      id: isEdit ? id! : form.title.toLowerCase().replace(/\s+/g, "-"),
-      title: form.title,
-      category: form.category,
-      description: form.description,
-      longDescription: form.longDescription,
-      tools: form.tools.split(",").map((t) => t.trim()).filter(Boolean),
-      software: form.software.split(",").map((s) => s.trim()).filter(Boolean),
-      image: existing?.image || "/placeholder.svg",
-      galleryImages: existing?.galleryImages || [],
-      workflowSteps: existing?.workflowSteps || [],
-      downloadFileId: form.downloadFileName ? form.title.toLowerCase().replace(/\s+/g, "-") + "-file" : undefined,
-      downloadFileName: form.downloadFileName || undefined,
-    };
+    try {
+      const projectData = {
+        id: isEdit ? id! : form.title.toLowerCase().replace(/\s+/g, "-"),
+        title: form.title,
+        category: form.category,
+        description: form.description,
+        longDescription: form.longDescription,
+        tools: form.tools.split(",").map((t) => t.trim()).filter(Boolean),
+        software: form.software.split(",").map((s) => s.trim()).filter(Boolean),
+        image: existing?.image || "/placeholder.svg",
+        galleryImages: existing?.galleryImages || [],
+        workflowSteps: existing?.workflowSteps || [],
+        downloadFileId: form.downloadFileName ? form.title.toLowerCase().replace(/\s+/g, "-") + "-file" : undefined,
+        downloadFileName: form.downloadFileName || undefined,
+      };
 
-    if (isEdit) {
-      await portfolioService.update(id!, projectData);
-      toast.success("Project updated");
-    } else {
-      await portfolioService.create(projectData);
-      toast.success("Project created");
+      if (isEdit) {
+        await portfolioService.update(id!, projectData);
+        toast.success("Project updated");
+      } else {
+        await portfolioService.create(projectData);
+        toast.success("Project created");
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
+      navigate("/admin/portfolio");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Save failed";
+      toast.error(msg);
     }
-
-    queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
     setSaving(false);
-    navigate("/admin/portfolio");
   };
 
   const fields = [
@@ -110,7 +115,7 @@ const AdminPortfolioForm = () => {
               <label className="block text-sm font-display text-foreground mb-2">{f.label}</label>
               {f.type === "textarea" ? (
                 <textarea
-                  value={(form as any)[f.key]}
+                  value={form[f.key as keyof typeof form]}
                   onChange={(e) => handleChange(f.key, e.target.value)}
                   placeholder={f.placeholder}
                   rows={4}
@@ -119,7 +124,7 @@ const AdminPortfolioForm = () => {
               ) : (
                 <input
                   type="text"
-                  value={(form as any)[f.key]}
+                  value={form[f.key as keyof typeof form]}
                   onChange={(e) => handleChange(f.key, e.target.value)}
                   placeholder={f.placeholder}
                   className="w-full bg-secondary border border-border rounded-lg px-4 py-3 text-foreground font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"

@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { portfolioProjects } from "@/data/portfolioData";
+import { portfolioService } from "@/services/portfolioService";
 import { blogService } from "@/services/blogService";
 import { FileDown, BookOpen, Layers, Eye } from "lucide-react";
 
@@ -28,6 +28,11 @@ const Home = () => {
   const { data: latestPosts } = useQuery({
     queryKey: ["latest-posts"],
     queryFn: () => blogService.getLatest(3),
+  });
+
+  const { data: featuredProjects } = useQuery({
+    queryKey: ["home-portfolio"],
+    queryFn: () => portfolioService.list(),
   });
 
   return (
@@ -54,7 +59,7 @@ const Home = () => {
             </h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {portfolioProjects.slice(0, 3).map((p, i) => (
+            {(featuredProjects ?? []).slice(0, 3).map((p, i) => (
               <motion.div
                 key={p.id}
                 initial={{ opacity: 0, y: 40 }}

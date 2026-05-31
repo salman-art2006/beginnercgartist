@@ -1,12 +1,9 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-interface AdminState {
+interface AdminContextValue {
   isAuthenticated: boolean;
-}
-
-interface AdminContextValue extends AdminState {
-  login: (password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -18,31 +15,27 @@ export const useAdmin = () => {
   return ctx;
 };
 
-const ADMIN_SESSION_KEY = "env_art_admin_token";
-
 export const AdminProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const token = sessionStorage.getItem(ADMIN_SESSION_KEY);
-    return !!token && token.startsWith("adm_");
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = useCallback(async (password: string): Promise<boolean> => {
-    try {
-      const { data, error } = await supabase.functions.invoke("admin-login", {
-        body: { password },
-      });
-      if (error || !data?.success) return false;
-      sessionStorage.setItem(ADMIN_SESSION_KEY, data.token);
-      setIsAuthenticated(true);
-      return true;
-    } catch {
-      return false;
-    }
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthenticated(!!data.session);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setIsAuthenticated(!!session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const login = useCallback(async (email: string, password: string): Promise<boolean> => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error || !data.session) return false;
+    return true;
   }, []);
 
   const logout = useCallback(() => {
-    sessionStorage.removeItem(ADMIN_SESSION_KEY);
-    setIsAuthenticated(false);
+    supabase.auth.signOut();
   }, []);
 
   return (
