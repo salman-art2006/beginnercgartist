@@ -96,6 +96,11 @@ const PortfolioDetail = () => {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-2">
               <h2 className="font-display text-2xl font-bold text-foreground mb-4">Project Overview</h2>
               <p className="text-muted-foreground font-body leading-relaxed text-lg">{project.longDescription}</p>
+              {project.videoUrl && (
+                <a href={project.videoUrl} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-md bg-brand px-6 py-3.5 font-bold text-brand-foreground hover:opacity-90">
+                  Watch the video on YouTube
+                </a>
+              )}
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="space-y-6">
               <div className="bg-card border border-border rounded-xl p-6 shadow-card">
@@ -182,7 +187,7 @@ const PortfolioDetail = () => {
                 </p>
                 <button onClick={handleDownload} disabled={downloading}
                   className={`inline-flex items-center gap-2 px-8 py-4 rounded-lg font-display font-semibold transition-all ${
-                    isSubscribed ? "bg-gradient-gold text-primary-foreground hover:opacity-90 shadow-glow" : "bg-secondary text-muted-foreground border border-border hover:border-primary/30"
+                    isSubscribed ? "bg-brand text-brand-foreground hover:opacity-90 shadow-glow" : "bg-secondary text-muted-foreground border border-border hover:border-primary/30"
                   }`}>
                   {downloading ? <Loader2 className="w-5 h-5 animate-spin" /> : isSubscribed ? <Download className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
                   {isSubscribed ? `Download ${project.downloadFileName}` : "Subscribe to Unlock"}
@@ -192,7 +197,7 @@ const PortfolioDetail = () => {
               <div className="bg-card border border-border rounded-2xl p-8 shadow-card">
                 <h3 className="font-display text-2xl font-bold text-foreground mb-3">Want More Project Files?</h3>
                 <p className="text-muted-foreground font-body mb-6">Subscribe to get access to downloadable Blender scenes, textures, and workflow breakdowns.</p>
-                <Link to="/resources" className="bg-gradient-gold text-primary-foreground font-display font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity shadow-glow inline-block">
+                <Link to="/resources" className="bg-brand text-brand-foreground font-display font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity shadow-glow inline-block">
                   Get Free Files
                 </Link>
               </div>

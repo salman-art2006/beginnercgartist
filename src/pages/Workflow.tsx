@@ -1,131 +1,176 @@
+import { Link } from "react-router-dom";
+import { ArrowUpRight, Play } from "lucide-react";
 import Layout from "@/components/Layout";
 import PageMeta from "@/components/PageMeta";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { Lightbulb, Box, Paintbrush, Sun, Camera, Monitor, Layers, Settings } from "lucide-react";
+import BeforeAfter from "@/components/BeforeAfter";
+import { PageHeader } from "@/components/PageHeader";
+import { TOOLS, ToolIcon } from "@/components/ToolIcon";
+import { Reveal, Section, watchUrl } from "@/components/home/shared";
 
 const steps = [
-  { icon: Lightbulb, title: "Concept & Research", desc: "Every project starts with gathering references, creating mood boards, and defining the visual story. I use PureRef to organize reference images — studying real-world architecture, lighting conditions, and natural phenomena that will inform the scene." },
-  { icon: Box, title: "Blockout & Composition", desc: "Using simple shapes, I establish scale, camera angle, and compositional flow. This is the most important phase — if the blockout doesn't work, no amount of detail will save it. I test multiple camera angles before committing." },
-  { icon: Layers, title: "Detailed Modeling", desc: "With the composition locked, I add geometric detail. Subdivision modeling for organic forms, boolean operations for damage and wear, and kitbashing from personal asset libraries for mechanical elements." },
-  { icon: Paintbrush, title: "Materials & Texturing", desc: "I use a hybrid approach: procedural materials in Blender's shader editor for large-scale variation, and image textures from Quixel Megascans for fine surface detail. UV unwrapping strategy depends on asset importance." },
-  { icon: Sun, title: "Lighting & Atmosphere", desc: "Lighting makes or breaks a scene. I start with HDRI for natural ambient light, then add key lights for dramatic focus. Volumetric effects — god rays, fog, dust particles — bring scenes to life." },
-  { icon: Camera, title: "Rendering & Post", desc: "Final renders in Cycles with OptiX denoising. Post-processing adds color grading, subtle bloom, vignette, and chromatic aberration in the Blender compositor." },
+  {
+    n: "01", title: "References and composition",
+    text: "I collect references first and decide the camera angle and the one thing the eye should land on. Scale and mood are decided here, before any modelling.",
+    points: ["Reference images for the look, scale and light", "Camera angle and focal point chosen early"],
+  },
+  {
+    n: "02", title: "Terrain and blockout",
+    text: "I sculpt the ground and place the big shapes: rocks, buildings, trees. Then I check the scene from the render camera. If the blockout does not work, details will not fix it.",
+    points: ["Terrain sculpting", "Big shapes and scale checked through the camera"],
+  },
+  {
+    n: "03", title: "Assets and architecture",
+    text: "I build the hero pieces and use free, licence-clean assets for the rest. I vary rotation, scale and placement so nothing looks copy-pasted.",
+    points: ["Own models plus free sources like Poly Haven and AmbientCG", "Variation so repetition stays hidden"],
+    video: { id: "EXmLxHDj9fY", label: "Watch: Abandoned Gas Station tutorial" },
+  },
+  {
+    n: "04", title: "Scatter and materials",
+    text: "Grass, flowers and trees are scattered with the right tool for the Blender version I am on. Materials are mostly procedural: noise, colour ramps and mixes for natural variation.",
+    points: ["Vegetation scattering and wind", "Procedural materials with Geometry Nodes where it helps"],
+    video: { id: "PI3nV4OVzVY", label: "Watch: Procedural Vine Generator" },
+  },
+  {
+    n: "05", title: "Light, atmosphere and camera",
+    text: "I start with an HDRI or sky for natural light, rotate it until the shadows work, then add fog and volumes for depth. Depth of field and a slow, weighty camera finish the shot.",
+    points: ["HDRI / Sky texture, volumetrics, depth of field", "Slow start, steady middle, slow finish for animation"],
+    video: { id: "QlM7GWLuWHg", label: "Watch: Mistwood Giants breakdown" },
+  },
+  {
+    n: "06", title: "Render and finish",
+    text: "I render in Cycles. Heavy animation scenes go to a cloud GPU. The final look is graded in DaVinci Resolve, and stills are finished in Photopea.",
+    points: ["Cycles with denoising, passes when needed", "Colour grading and final polish"],
+    video: { id: "ltvXyxY9_Xg", label: "Watch: Post-process renders for free" },
+  },
 ];
 
-const tools = [
-  { icon: Monitor, name: "Blender 3.6+", desc: "Primary 3D application for all modeling, texturing, lighting, and rendering." },
-  { icon: Paintbrush, name: "Substance Painter", desc: "Detailed texture painting for hero assets with PBR material workflows." },
-  { icon: Settings, name: "Substance Designer", desc: "Procedural material creation for tileable textures and surface patterns." },
-  { icon: Layers, name: "Quixel Megascans", desc: "Photogrammetry-based textures and 3D assets for photorealistic environments." },
-];
-
-const insights = [
-  { title: "Start Simple", desc: "Don't jump to details. A beautiful blockout with great lighting will always outperform a detailed scene with bad composition." },
-  { title: "Reference Everything", desc: "Reality is the best teacher. Study photos, visit real locations, observe how light behaves. Your 3D work will improve dramatically." },
-  { title: "Iterate on Lighting", desc: "I often spend as much time on lighting as modeling. Save multiple lighting setups and compare them. Small changes create huge mood shifts." },
-  { title: "Share Your Process", desc: "Document your work from the beginning. Process shots, viewport screenshots, and wip renders are more valuable than you think." },
-];
-
-const Workflow = () => {
-  const introRef = useRef(null);
-  const introInView = useInView(introRef, { once: true, margin: "-50px" });
-  const stepsRef = useRef(null);
-  const stepsInView = useInView(stepsRef, { once: true, margin: "-50px" });
-  const toolsRef = useRef(null);
-  const toolsInView = useInView(toolsRef, { once: true, margin: "-50px" });
-  const insightsRef = useRef(null);
-  const insightsInView = useInView(insightsRef, { once: true, margin: "-50px" });
-
-  return (
-    <Layout>
-      <PageMeta
-        title="Workflow"
-        description="Learn the step-by-step 3D environment art workflow: concept, modeling, texturing, lighting, and rendering in Blender."
-        path="/workflow"
-      />
-
-      {/* Section 1: Workflow Intro */}
-      <section className="pt-28 pb-16" ref={introRef}>
-        <div className="container mx-auto px-6 text-center max-w-3xl">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={introInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-            <p className="text-primary font-display text-sm tracking-[0.3em] uppercase mb-4">Process</p>
-            <h1 className="font-display text-3xl md:text-5xl font-bold mb-6">My <span className="text-gradient-gold">Workflow</span></h1>
-            <p className="text-muted-foreground font-body text-lg leading-relaxed">
-              Creating a 3D environment is a journey from concept to final pixel. Each step builds on the previous one, and the process is as important as the result. Here's how I approach every project.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Section 2: Step-by-Step Process */}
-      <section className="py-16 bg-card/50" ref={stepsRef}>
-        <div className="container mx-auto px-6 max-w-4xl">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={stepsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-12">
-            <h2 className="font-display text-2xl md:text-3xl font-bold">Step-by-Step <span className="text-gradient-gold">Process</span></h2>
-          </motion.div>
-          <div className="space-y-10">
-            {steps.map((step, i) => (
-              <motion.div key={step.title} initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }} animate={stepsInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: i * 0.1 }} className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-secondary flex items-center justify-center border border-border">
-                  <step.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-primary font-display text-xs tracking-widest">0{i + 1}</span>
-                    <h3 className="font-display text-xl font-semibold text-foreground">{step.title}</h3>
-                  </div>
-                  <p className="text-muted-foreground font-body leading-relaxed">{step.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3: Tools & Software */}
-      <section className="py-16" ref={toolsRef}>
-        <div className="container mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={toolsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-12">
-            <h2 className="font-display text-2xl md:text-3xl font-bold">Tools & <span className="text-gradient-gold">Software</span></h2>
-          </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {tools.map((tool, i) => (
-              <motion.div key={tool.name} initial={{ opacity: 0, y: 30 }} animate={toolsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: i * 0.08 }} className="bg-card border border-border rounded-xl p-6 text-center shadow-card">
-                <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center mx-auto mb-4">
-                  <tool.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-display text-base font-semibold text-foreground mb-2">{tool.name}</h3>
-                <p className="text-muted-foreground text-sm font-body">{tool.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Learning Insights */}
-      <section className="py-16 bg-card/50" ref={insightsRef}>
-        <div className="container mx-auto px-6 max-w-4xl">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={insightsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-12">
-            <h2 className="font-display text-2xl md:text-3xl font-bold">Process <span className="text-gradient-gold">Insights</span></h2>
-            <p className="text-muted-foreground font-body mt-3">Lessons learned from creating 20+ environment scenes</p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {insights.map((item, i) => (
-              <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} animate={insightsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: i * 0.1 }} className="bg-card border border-border rounded-xl p-6 shadow-card">
-                <h3 className="font-display text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm font-body leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link to="/blog" className="border border-border text-foreground font-display font-medium px-8 py-3 rounded-lg hover:bg-secondary transition-colors inline-block">Read Workflow Articles</Link>
-          </div>
-        </div>
-      </section>
-    </Layout>
-  );
+const toolNotes: Record<string, string> = {
+  "Blender 5.2": "Everything 3D: modelling, sculpting, scattering, lighting and animation.",
+  Cycles: "The render engine for every scene on this site.",
+  "Geometry Nodes": "Procedural setups for scattering and repeatable details.",
+  "DaVinci Resolve Studio": "Editing and colour grading for animations.",
+  Photopea: "Free finishing for still renders in the browser.",
+  "OctaSpace cloud rendering": "Cloud GPUs for scenes too heavy to render locally.",
 };
+
+const habits = [
+  { title: "Check scale early", text: "Look through the render camera from the first minute. Scale mistakes are cheap to fix at blockout and expensive later." },
+  { title: "Light with intent", text: "Try a few HDRI rotations and compare them. Small changes in light direction change the whole mood." },
+  { title: "Vary everything", text: "Rotate, scale and swap assets. Repetition is the fastest way to make a scene look fake." },
+  { title: "Render smart", text: "Test at low samples, lock the camera, and only then send the heavy final render." },
+];
+
+const Workflow = () => (
+  <Layout>
+    <PageMeta
+      title="Workflow"
+      description="How Salman builds realistic Blender environments, from references and blockout to Cycles rendering and colour grading, with the tools used at each step."
+      path="/workflow"
+    />
+    <PageHeader
+      eyebrow="Workflow"
+      title={<>From grey blockout to <span className="text-primary">final render</span></>}
+      intro="The same six steps sit behind every scene on this site."
+    />
+
+    <section className="pb-20">
+      <div className="container mx-auto px-6">
+        <BeforeAfter
+          alt="Frog Island compared between the Blender viewport and the final Cycles render"
+          beforeSrc="/images/hero-viewport-1280.webp"
+          beforeSrcSet="/images/hero-viewport-1280.webp 1280w, /images/hero-viewport.webp 1920w"
+          afterSrc="/images/hero-render-1280.webp"
+          afterSrcSet="/images/hero-render-1280.webp 1280w, /images/hero-render.webp 1920w"
+          sizes="(min-width: 1280px) 1200px, 100vw"
+        />
+        <p className="mt-3 text-sm font-semibold text-muted-foreground">Drag to compare: the Frog Island viewport on the left, the final render on the right.</p>
+      </div>
+    </section>
+
+    <Section tone="alt">
+      <ol>
+        {steps.map((s, i) => (
+          <Reveal key={s.n} delay={0.04 * (i % 3)}>
+            <li className="grid gap-6 border-t border-border py-10 lg:grid-cols-12 lg:gap-10">
+              <div className="flex items-baseline gap-5 lg:col-span-4">
+                <span className="font-anton text-5xl text-primary">{s.n}</span>
+                <h2 className="text-3xl leading-none sm:text-4xl">{s.title}</h2>
+              </div>
+              <div className="lg:col-span-5">
+                <p className="text-base leading-relaxed text-muted-foreground font-body md:text-lg">{s.text}</p>
+                <ul className="mt-5 space-y-2">
+                  {s.points.map((p) => (
+                    <li key={p} className="flex items-start gap-3 text-sm font-semibold text-foreground font-body">
+                      <span className="mt-1.5 h-2 w-2 shrink-0 bg-brand" aria-hidden="true" /> {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="lg:col-span-3 lg:justify-self-end">
+                {s.video && (
+                  <a href={watchUrl(s.video.id)} target="_blank" rel="noopener noreferrer" className="group block w-full max-w-xs">
+                    <div className="relative overflow-hidden rounded-lg border border-border">
+                      <img src={`/images/yt/${s.video.id}.webp`} alt={s.video.label} width={1280} height={720} loading="lazy" className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
+                      <span className="absolute bottom-2.5 right-2.5 flex h-9 w-9 items-center justify-center rounded-full bg-brand text-brand-foreground"><Play className="h-3.5 w-3.5 fill-current" /></span>
+                    </div>
+                    <p className="mt-2 text-sm font-bold text-foreground transition-colors group-hover:text-primary">{s.video.label}</p>
+                  </a>
+                )}
+              </div>
+            </li>
+          </Reveal>
+        ))}
+      </ol>
+    </Section>
+
+    <Section>
+      <Reveal className="mb-12 max-w-2xl">
+        <p className="eyebrow mb-4">Tools</p>
+        <h2 className="text-4xl sm:text-5xl">What I use at <span className="text-primary">each step</span></h2>
+      </Reveal>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {TOOLS.map((t, i) => (
+          <Reveal key={t.name} delay={0.05 * i}>
+            <div className="h-full rounded-lg border border-border bg-card p-6 shadow-card">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-md border border-border bg-background">
+                <ToolIcon tool={t} className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-bold text-foreground">{t.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground font-body">{toolNotes[t.name]}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+
+    <Section tone="alt">
+      <Reveal className="mb-12 max-w-2xl">
+        <p className="eyebrow mb-4">Habits</p>
+        <h2 className="text-4xl sm:text-5xl">Four things that <span className="text-primary">help most</span></h2>
+      </Reveal>
+      <div className="grid gap-x-10 gap-y-8 md:grid-cols-2">
+        {habits.map((h, i) => (
+          <Reveal key={h.title} delay={0.05 * i}>
+            <div className="border-t-2 border-foreground pt-5">
+              <h3 className="text-xl font-bold text-foreground">{h.title}</h3>
+              <p className="mt-2 leading-relaxed text-muted-foreground font-body">{h.text}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+
+    <section className="bg-[#141414] py-20 text-white lg:py-24">
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="mx-auto max-w-3xl text-4xl text-white sm:text-5xl lg:text-6xl">Want to see it built <span className="text-[#FFD23F]">in full?</span></h2>
+        <p className="mx-auto mt-5 max-w-xl text-[#BDBDBD] font-body md:text-lg">The tutorials show each step on a real scene, and the library has the project files.</p>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link to="/tutorials" className="inline-flex items-center rounded-md bg-[#FFD23F] px-7 py-3.5 font-bold text-[#141414] hover:opacity-90">Watch the tutorials</Link>
+          <Link to="/library" className="inline-flex items-center gap-1.5 rounded-md border border-white/30 px-7 py-3.5 font-bold text-white hover:bg-white/10">Open the library <ArrowUpRight className="h-4 w-4" /></Link>
+        </div>
+      </div>
+    </section>
+  </Layout>
+);
 
 export default Workflow;

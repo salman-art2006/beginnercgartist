@@ -1,112 +1,100 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2, Search } from "lucide-react";
 import Layout from "@/components/Layout";
 import PageMeta from "@/components/PageMeta";
 import BlogCard from "@/components/BlogCard";
+import { FilterChips, PageHeader } from "@/components/PageHeader";
+import { YT } from "@/components/home/shared";
 import { blogService } from "@/services/blogService";
-import { BLOG_CATEGORIES, type BlogCategory } from "@/data/blogTypes";
-import { useQuery } from "@tanstack/react-query";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Loader2, Rss } from "lucide-react";
+import type { BlogCategory } from "@/data/blogTypes";
+
+const PER_PAGE = 9;
 
 const Blog = () => {
-  const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: true, margin: "-50px" });
-  const gridRef = useRef(null);
-  const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
-  const ctaRef = useRef(null);
-  const ctaInView = useInView(ctaRef, { once: true, margin: "-50px" });
-  const [activeCategory, setActiveCategory] = useState<BlogCategory | undefined>();
+  const [category, setCategory] = useState("All");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["blog-posts", activeCategory],
-    queryFn: () => blogService.list({ category: activeCategory, perPage: 12 }),
+    queryKey: ["blog-posts", category, search, page],
+    queryFn: () => blogService.list({ category: category === "All" ? undefined : (category as BlogCategory), search: search.trim() || undefined, page, perPage: PER_PAGE }),
   });
+  const { data: cats } = useQuery({ queryKey: ["blog-categories"], queryFn: () => blogService.getCategories() });
 
-  const { data: categories } = useQuery({
-    queryKey: ["blog-categories"],
-    queryFn: () => blogService.getCategories(),
-  });
+  const posts = data?.posts ?? [];
+  const noPostsAtAll = !isLoading && (data?.total ?? 0) === 0 && category === "All" && !search.trim();
+  const showFeatured = page === 1 && category === "All" && !search.trim() && posts.length > 1;
+  const [first, ...rest] = posts;
 
   return (
     <Layout>
       <PageMeta
         title="Blog"
-        description="Blender tips, environment art workflows, scene breakdowns, and 3D artist resources. New posts daily."
+        description="Articles on Blender environment art: workflows, lighting, project breakdowns and tips from Salman."
         path="/blog"
       />
+      <PageHeader
+        eyebrow="Blog"
+        title={<>Notes from <span className="text-primary">the viewport</span></>}
+        intro="Workflows, project breakdowns and tips for building realistic environments in Blender."
+      />
 
-      {/* Section 1: Blog Hero */}
-      <section className="pt-28 pb-12" ref={heroRef}>
-        <div className="container mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={heroInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-            <p className="text-primary font-display text-sm tracking-[0.3em] uppercase mb-4">Blog</p>
-            <h1 className="font-display text-3xl md:text-5xl font-bold mb-4">Art &amp; <span className="text-gradient-gold">Insights</span></h1>
-            <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-              Deep dives into Blender techniques, environment art theory, scene breakdowns, and the creative journey of building a personal brand as a 3D artist. New content published regularly.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Section 2: Categories + Posts Grid */}
-      <section className="pb-16" ref={gridRef}>
+      <section className="pb-24">
         <div className="container mx-auto px-6">
-          {/* Category Filter */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={gridInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="flex flex-wrap justify-center gap-2 mb-12">
-            <button
-              onClick={() => setActiveCategory(undefined)}
-              className={`px-4 py-2 rounded-full text-sm font-display transition-colors border ${
-                !activeCategory ? "bg-primary text-primary-foreground border-primary" : "bg-secondary text-muted-foreground border-border hover:border-primary/30"
-              }`}
-            >
-              All
-            </button>
-            {BLOG_CATEGORIES.map((cat) => {
-              const count = categories?.find((c) => c.category === cat)?.count || 0;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-display transition-colors border ${
-                    activeCategory === cat ? "bg-primary text-primary-foreground border-primary" : "bg-secondary text-muted-foreground border-border hover:border-primary/30"
-                  }`}
-                >
-                  {cat}{count > 0 && <span className="ml-1 opacity-60">({count})</span>}
-                </button>
-              );
-            })}
-          </motion.div>
-
-          {/* Posts */}
-          {isLoading ? (
-            <div className="flex justify-center py-20"><Loader2 className="w-8 h-8 text-primary animate-spin" /></div>
-          ) : data && data.posts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {data.posts.map((post, i) => (
-                <BlogCard key={post.id} post={post} index={i} isInView={gridInView} />
-              ))}
+          {noPostsAtAll ? (
+            <div className="rounded-lg border border-dashed border-border px-6 py-20 text-center">
+              <h2 className="text-4xl sm:text-5xl">First articles are on the way</h2>
+              <p className="mx-auto mt-4 max-w-lg text-muted-foreground font-body md:text-lg">
+                Until then, the tutorials and breakdowns on YouTube cover everything I know about building environments.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link to="/tutorials" className="inline-flex items-center rounded-md bg-brand px-6 py-3.5 font-bold text-brand-foreground hover:opacity-90">Browse tutorials</Link>
+                <a href={YT} target="_blank" rel="noopener noreferrer" className="inline-flex items-center rounded-md border border-foreground/30 px-6 py-3.5 font-bold text-foreground hover:bg-secondary">YouTube channel</a>
+              </div>
             </div>
           ) : (
-            <p className="text-center text-muted-foreground font-body py-20">No posts found in this category yet.</p>
-          )}
-        </div>
-      </section>
+            <>
+              <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                <FilterChips options={["All", ...(cats ?? []).map((c) => c.category)]} value={category} onChange={(v) => { setCategory(v); setPage(1); }} />
+                <div className="relative w-full lg:w-72">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                    placeholder="Search articles"
+                    aria-label="Search articles"
+                    className="w-full rounded-md border border-border bg-card py-2.5 pl-10 pr-4 text-sm text-foreground font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
+              </div>
 
-      {/* Section 3: Subscribe CTA */}
-      <section className="py-20 bg-card/50" ref={ctaRef}>
-        <div className="container mx-auto px-6 max-w-3xl text-center">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={ctaInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-            <Rss className="w-8 h-8 text-primary mx-auto mb-4" />
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">Stay Updated</h2>
-            <p className="text-muted-foreground font-body mb-8 max-w-xl mx-auto">
-              Subscribe to get notified about new blog posts, project file releases, and exclusive content for the 3D art community.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/resources" className="bg-gradient-gold text-primary-foreground font-display font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-glow inline-block">Subscribe for Free</Link>
-              <Link to="/portfolio" className="border border-border text-foreground font-display font-medium px-8 py-3 rounded-lg hover:bg-secondary transition-colors inline-block">Explore Portfolio</Link>
-            </div>
-          </motion.div>
+              {isLoading ? (
+                <div className="flex justify-center py-24"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+              ) : posts.length === 0 ? (
+                <p className="py-20 text-center text-muted-foreground font-body">No articles match that.</p>
+              ) : (
+                <>
+                  {showFeatured && (
+                    <div className="mb-14"><BlogCard post={first} large /></div>
+                  )}
+                  <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                    {(showFeatured ? rest : posts).map((p) => <BlogCard key={p.id} post={p} />)}
+                  </div>
+                </>
+              )}
+
+              {(data?.totalPages ?? 0) > 1 && (
+                <div className="mt-14 flex items-center justify-center gap-3">
+                  <button type="button" disabled={page <= 1} onClick={() => setPage(page - 1)} className="rounded-md border border-foreground/30 px-5 py-2.5 text-sm font-bold text-foreground hover:bg-secondary disabled:opacity-30">Previous</button>
+                  <span className="text-sm font-semibold text-muted-foreground">Page {page} of {data?.totalPages}</span>
+                  <button type="button" disabled={page >= (data?.totalPages ?? 1)} onClick={() => setPage(page + 1)} className="rounded-md border border-foreground/30 px-5 py-2.5 text-sm font-bold text-foreground hover:bg-secondary disabled:opacity-30">Next</button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
     </Layout>

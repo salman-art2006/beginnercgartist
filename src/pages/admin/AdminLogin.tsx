@@ -5,12 +5,13 @@ import { Lock, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const AdminLogin = () => {
-  const { isAuthenticated, login } = useAdmin();
+  const { isAuthenticated, loading: sessionLoading, login } = useAdmin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  if (sessionLoading) return <div className="min-h-screen bg-background" />;
   if (isAuthenticated) return <Navigate to="/admin" replace />;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,7 +53,7 @@ const AdminLogin = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-gold text-primary-foreground font-display font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+            className="w-full bg-brand text-brand-foreground font-display font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign In"}
           </button>

@@ -40,7 +40,7 @@ serve(async (req) => {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Generate subscriber token
-    const token = `sub_${Date.now()}_${crypto.randomUUID().slice(0, 8)}`;
+    const token = `sub_${crypto.randomUUID()}`;
 
     const { data, error } = await supabase
       .from("subscribers")

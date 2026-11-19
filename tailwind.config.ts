@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
+        anton: ["Anton", "Impact", "sans-serif"],
+        display: ["Inter", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
       colors: {
@@ -23,6 +24,10 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          foreground: "hsl(var(--brand-foreground))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -81,8 +86,8 @@ export default {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(38 90% 55% / 0.2)" },
-          "50%": { boxShadow: "0 0 40px hsl(38 90% 55% / 0.4)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(45 100% 62% / 0.2)" },
+          "50%": { boxShadow: "0 0 40px hsl(45 100% 62% / 0.4)" },
         },
       },
       animation: {

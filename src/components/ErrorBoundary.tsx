@@ -26,7 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="bg-gradient-gold text-primary-foreground font-display font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
+              className="bg-brand text-brand-foreground font-display font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
             >
               Refresh Page
             </button>

@@ -96,14 +96,4 @@ export const blogService = {
       count,
     }));
   },
-
-  async triggerAutoGenerate(): Promise<{ success: boolean; post?: BlogPost; error?: string }> {
-    try {
-      const { data, error } = await supabase.functions.invoke("auto-generate-blog");
-      if (error) throw error;
-      return data as { success: boolean; post?: BlogPost; error?: string };
-    } catch (err) {
-      return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
-    }
-  },
 };

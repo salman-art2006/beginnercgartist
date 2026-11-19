@@ -140,7 +140,7 @@ const AdminEmails = () => {
           <button
             onClick={handleSend}
             disabled={sending}
-            className="bg-gradient-gold text-primary-foreground font-display font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-glow flex items-center gap-2"
+            className="bg-brand text-brand-foreground font-display font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-glow flex items-center gap-2"
           >
             {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
             {sending ? "Sending..." : `Send to ${subStats?.total || 0} Subscribers`}
