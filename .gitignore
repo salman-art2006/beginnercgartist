@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+# Local secrets (admin seed + credentials)
+*.local.*
+ADMIN_CREDENTIALS.local.txt

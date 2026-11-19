@@ -1,116 +1,153 @@
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { ArrowUpRight, Download, Loader2, Lock, Search } from "lucide-react";
+import { toast } from "sonner";
 import Layout from "@/components/Layout";
 import PageMeta from "@/components/PageMeta";
-import { resourceLibraryService, type Resource } from "@/services/resourceLibraryService";
+import SubscribeForm from "@/components/SubscribeForm";
+import { EmptyState, FilterChips, PageHeader } from "@/components/PageHeader";
+import { Section } from "@/components/home/shared";
+import JoinButton from "@/components/JoinButton";
+import { useSubscribeModal } from "@/contexts/SubscribeModalContext";
 import { useSubscriber } from "@/contexts/SubscriberContext";
-import { useQuery } from "@tanstack/react-query";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Download, Lock, Package, Loader2, Search } from "lucide-react";
+import { resourceLibraryService, type Resource } from "@/services/resourceLibraryService";
 
 const ResourceLibrary = () => {
-  const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: true, margin: "-50px" });
-  const gridRef = useRef(null);
-  const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
-  const [activeCategory, setActiveCategory] = useState("All");
+  const queryClient = useQueryClient();
+  const { isSubscribed, subscriber } = useSubscriber();
+  const { open: openJoin } = useSubscribeModal();
+  const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
-  const { isSubscribed } = useSubscriber();
+  const [busy, setBusy] = useState<string | null>(null);
 
-  const { data: resources, isLoading } = useQuery({
-    queryKey: ["resource-library"],
-    queryFn: () => resourceLibraryService.list(),
-  });
+  const { data: resources, isLoading } = useQuery({ queryKey: ["resources"], queryFn: () => resourceLibraryService.list() });
 
-  const categories = ["All", ...Array.from(new Set((resources || []).map(r => r.category)))];
+  const list = resources || [];
+  const categories = Array.from(new Set(list.map((r) => r.category)));
+  const q = search.trim().toLowerCase();
+  const filtered = list
+    .filter((r) => {
+      if (filter === "All") return true;
+      if (filter === "Free") return !r.isPremium;
+      if (filter === "Paid") return r.isPremium;
+      return r.category === filter;
+    })
+    .filter((r) => !q || r.title.toLowerCase().includes(q) || r.description.toLowerCase().includes(q) || r.tags.some((t) => t.toLowerCase().includes(q)));
 
-  let filtered = activeCategory === "All" ? (resources || []) : (resources || []).filter(r => r.category === activeCategory);
-  if (search) {
-    const q = search.toLowerCase();
-    filtered = filtered.filter(r => r.title.toLowerCase().includes(q) || r.description.toLowerCase().includes(q) || r.tags.some(t => t.toLowerCase().includes(q)));
-  }
+  const download = async (r: Resource) => {
+    if (!subscriber) return;
+    setBusy(r.slug);
+    const res = await resourceLibraryService.requestDownload(r.slug, subscriber.token);
+    setBusy(null);
+    if (res.url) {
+      window.open(res.url, "_blank", "noopener,noreferrer");
+      queryClient.invalidateQueries({ queryKey: ["resources"] });
+    } else {
+      toast.error(res.error || "Download failed");
+    }
+  };
 
   return (
     <Layout>
-      <PageMeta title="Resource Library" description="Download free Blender assets, materials, HDRIs, templates, and reference packs for environment art." path="/library" />
+      <PageMeta
+        title="Library: Blender project files and scenes"
+        description="Free Blender project files and downloadable environment scenes by Salman. Open a scene, see how it is built and learn faster."
+        path="/library"
+      />
+      <PageHeader
+        eyebrow="Library"
+        title={<>Project files <span className="text-primary">and scenes</span></>}
+        intro="Free tools and full Blender scene files. Open them, click through them and see exactly how they are built."
+      />
 
-      <section className="pt-28 pb-12" ref={heroRef}>
-        <div className="container mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={heroInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-            <p className="text-primary font-display text-sm tracking-[0.3em] uppercase mb-4">Library</p>
-            <h1 className="font-display text-3xl md:text-5xl font-bold mb-4">Resource <span className="text-gradient-gold">Library</span></h1>
-            <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-              Free and premium assets for environment artists — materials, HDRIs, templates, 3D models, and reference packs.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="pb-20" ref={gridRef}>
+      <section className="pb-24">
         <div className="container mx-auto px-6">
-          {/* Search */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={gridInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="max-w-md mx-auto mb-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search resources..."
-                className="w-full bg-secondary border border-border rounded-lg pl-10 pr-4 py-3 text-foreground font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow text-sm" />
+          {!isSubscribed && (
+            <div className="mb-10 flex flex-col items-start justify-between gap-4 rounded-xl border border-border bg-card p-6 shadow-card sm:flex-row sm:items-center">
+              <div>
+                <p className="text-lg font-bold text-foreground">Free files are one step away</p>
+                <p className="text-sm text-muted-foreground font-body">Join the list to unlock the free downloads. It takes ten seconds.</p>
+              </div>
+              <JoinButton />
             </div>
-          </motion.div>
-
-          {/* Categories */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={gridInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.1 }} className="flex flex-wrap justify-center gap-2 mb-12">
-            {categories.map(cat => (
-              <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-4 py-2 rounded-full text-sm font-display transition-colors border ${activeCategory === cat ? "bg-primary text-primary-foreground border-primary" : "bg-secondary text-muted-foreground border-border hover:border-primary/30"}`}>
-                {cat}
-              </button>
-            ))}
-          </motion.div>
+          )}
+          <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <FilterChips options={["All", "Free", "Paid", ...categories]} value={filter} onChange={setFilter} />
+            <div className="relative w-full lg:w-72">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search files"
+                aria-label="Search files"
+                className="w-full rounded-md border border-border bg-card py-2.5 pl-10 pr-4 text-sm text-foreground font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          </div>
 
           {isLoading ? (
-            <div className="flex justify-center py-20"><Loader2 className="w-8 h-8 text-primary animate-spin" /></div>
-          ) : filtered.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((res, i) => (
-                <motion.div key={res.id} initial={{ opacity: 0, y: 30 }} animate={gridInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: i * 0.06 }}
-                  className="bg-card border border-border rounded-xl p-6 shadow-card hover:border-primary/30 transition-colors group"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center">
-                      <Package className="w-6 h-6 text-primary" />
-                    </div>
-                    {res.isPremium && (
-                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-display border border-primary/20">Premium</span>
+            <div className="flex justify-center py-24"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+          ) : filtered.length === 0 ? (
+            <EmptyState>
+              {filter === "Free" ? "No free files yet. New free files are added regularly, subscribe below to get a note." : "Nothing matches your search."}
+            </EmptyState>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((r) => (
+                <article key={r.id} className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card">
+                  <div className="relative overflow-hidden">
+                    {r.thumbnail ? (
+                      <img src={r.thumbnail} alt={r.title} width={1280} height={960} loading="lazy" className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                    ) : (
+                      <div className="aspect-[4/3] w-full bg-secondary" />
                     )}
+                    <span className={`absolute left-3 top-3 ${r.isPremium ? "chip" : "chip-brand"}`}>
+                      {r.isPremium ? r.priceLabel || "Paid" : "Free"}
+                    </span>
                   </div>
-                  <h3 className="font-display text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{res.title}</h3>
-                  <p className="text-muted-foreground text-sm font-body leading-relaxed mb-4">{res.description}</p>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground font-body mb-4">
-                    <span className="bg-secondary px-2 py-0.5 rounded border border-border">{res.fileType}</span>
-                    {res.fileSize && <span>{res.fileSize}</span>}
-                    <span>{res.downloadCount} downloads</span>
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="eyebrow mb-2">{r.category} · {r.fileType}{r.fileSize ? ` · ${r.fileSize}` : ""}</p>
+                    <h3 className="text-lg font-bold leading-snug text-foreground">{r.title}</h3>
+                    <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground font-body">{r.description}</p>
+
+                    <div className="mt-5">
+                      {r.isPremium ? (
+                        r.buyUrl && (
+                          <a href={r.buyUrl} target="_blank" rel="noopener noreferrer" className="flex w-full items-center justify-center gap-2 rounded-md bg-brand py-3 font-bold text-brand-foreground transition-opacity hover:opacity-90">
+                            Get it on Gumroad <ArrowUpRight className="h-4 w-4" />
+                          </a>
+                        )
+                      ) : !r.hasDownload ? (
+                        <p className="py-3 text-center text-sm font-semibold text-muted-foreground">Download coming soon</p>
+                      ) : isSubscribed ? (
+                        <button type="button" onClick={() => download(r)} disabled={busy === r.slug} className="flex w-full items-center justify-center gap-2 rounded-md bg-brand py-3 font-bold text-brand-foreground transition-opacity hover:opacity-90 disabled:opacity-60">
+                          {busy === r.slug ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} Download
+                        </button>
+                      ) : (
+                        <button type="button" onClick={openJoin} className="flex w-full items-center justify-center gap-2 rounded-md border border-foreground/30 py-3 font-bold text-foreground transition-colors hover:bg-secondary"><Lock className="h-4 w-4" /> Join the list to download</button>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {res.tags.map(tag => (
-                      <span key={tag} className="text-xs font-body text-secondary-foreground bg-secondary px-2 py-0.5 rounded border border-border">{tag}</span>
-                    ))}
-                  </div>
-                  {isSubscribed ? (
-                    <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-gradient-gold text-primary-foreground font-display font-semibold text-sm hover:opacity-90 transition-opacity shadow-glow">
-                      <Download className="w-4 h-4" /> Download
-                    </button>
-                  ) : (
-                    <Link to="/resources" className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-secondary text-muted-foreground font-display font-medium text-sm border border-border hover:border-primary/30 transition-colors">
-                      <Lock className="w-4 h-4" /> Subscribe to Download
-                    </Link>
-                  )}
-                </motion.div>
+                </article>
               ))}
             </div>
-          ) : (
-            <p className="text-center text-muted-foreground font-body py-20">No resources found.</p>
           )}
         </div>
       </section>
+
+      <Section tone="alt" id="unlock">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow mb-4">Free files</p>
+            <h2 className="text-4xl sm:text-5xl">Unlock the <span className="text-primary">free downloads</span></h2>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground font-body md:text-lg">
+              Join with your email to download free project files and get a note when new ones are out. Unsubscribe any time.
+            </p>
+          </div>
+          <SubscribeForm />
+        </div>
+      </Section>
     </Layout>
   );
 };

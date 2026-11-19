@@ -1,57 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Brand tokens: Vertex Yellow #FFD23F, Ink #141414, Graphite #1F1F1F, Fog #BDBDBD, Paper #F4F2EE */
 @layer base {
   :root {
-    --background: 220 20% 6%;
-    --foreground: 220 15% 85%;
+    --background: 40 17% 94%;
+    --foreground: 0 0% 8%;
 
-    --card: 220 18% 10%;
-    --card-foreground: 220 15% 85%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 220 15% 85%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
 
-    --primary: 38 90% 55%;
-    --primary-foreground: 220 20% 6%;
+    --primary: 40 100% 28%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 14%;
-    --secondary-foreground: 220 15% 75%;
+    --brand: 45 100% 62%;
+    --brand-foreground: 0 0% 8%;
 
-    --muted: 220 15% 14%;
-    --muted-foreground: 220 10% 50%;
+    --secondary: 40 14% 90%;
+    --secondary-foreground: 0 0% 20%;
 
-    --accent: 38 90% 55%;
-    --accent-foreground: 220 20% 6%;
+    --muted: 40 14% 90%;
+    --muted-foreground: 0 0% 36%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 45 100% 62%;
+    --accent-foreground: 0 0% 8%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 38 90% 55%;
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 10% 82%;
+    --input: 40 10% 82%;
+    --ring: 40 100% 28%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 220 20% 8%;
-    --sidebar-foreground: 220 15% 85%;
-    --sidebar-primary: 38 90% 55%;
-    --sidebar-primary-foreground: 220 20% 6%;
-    --sidebar-accent: 220 15% 14%;
-    --sidebar-accent-foreground: 220 15% 85%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 38 90% 55%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 8%;
+    --sidebar-primary: 40 100% 28%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 14% 90%;
+    --sidebar-accent-foreground: 0 0% 8%;
+    --sidebar-border: 40 10% 82%;
+    --sidebar-ring: 40 100% 28%;
 
-    --font-display: 'Space Grotesk', sans-serif;
+    --font-display: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    --gradient-gold: linear-gradient(135deg, hsl(38 90% 55%), hsl(28 85% 45%));
-    --gradient-dark: linear-gradient(180deg, hsl(220 20% 6%) 0%, hsl(220 25% 10%) 100%);
-    --shadow-glow: 0 0 30px hsl(38 90% 55% / 0.15);
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 1px 2px hsl(0 0% 0% / 0.05), 0 8px 24px hsl(0 0% 0% / 0.06);
+    --shadow-glow: 0 1px 2px hsl(0 0% 0% / 0.06);
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 45 100% 62%;
+    --primary-foreground: 0 0% 8%;
+
+    --brand: 45 100% 62%;
+    --brand-foreground: 0 0% 8%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 80%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 68%;
+
+    --accent: 45 100% 62%;
+    --accent-foreground: 0 0% 8%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 45 100% 62%;
+
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 45 100% 62%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 45 100% 62%;
+
+    --shadow-card: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 32px hsl(0 0% 0% / 0.35);
+    --shadow-glow: 0 1px 2px hsl(0 0% 0% / 0.4);
   }
 }
 
@@ -61,29 +106,41 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2 {
+    font-family: 'Anton', Impact, sans-serif;
+    font-weight: 400;
+    font-synthesis: none;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.98;
+  }
+
+  h3, h4, h5, h6 {
     font-family: var(--font-display);
+    letter-spacing: -0.01em;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
+  ::selection {
+    background: hsl(45 100% 62%);
+    color: hsl(0 0% 8%);
+  }
 }
 
 @layer utilities {
   .text-gradient-gold {
-    background: var(--gradient-gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: hsl(var(--primary));
   }
 
   .bg-gradient-gold {
-    background: var(--gradient-gold);
+    background: hsl(var(--brand));
   }
 
   .shadow-glow {
@@ -94,15 +151,40 @@
     box-shadow: var(--shadow-card);
   }
 
+  .font-anton {
+    font-family: 'Anton', Impact, sans-serif;
+    font-weight: 400;
+    font-synthesis: none;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  .eyebrow {
+    @apply font-body text-xs font-extrabold uppercase text-primary;
+    letter-spacing: 0.18em;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-sm bg-foreground px-2.5 py-1 font-body text-[11px] font-extrabold uppercase text-background;
+    letter-spacing: 0.14em;
+  }
+
+  .chip-brand {
+    @apply inline-flex items-center rounded-sm px-2.5 py-1 font-body text-[11px] font-extrabold uppercase;
+    background: hsl(var(--brand));
+    color: hsl(var(--brand-foreground));
+    letter-spacing: 0.14em;
+  }
+
   /* Blog prose styles */
   .prose-blog {
     @apply font-body text-foreground leading-relaxed;
   }
   .prose-blog h2 {
-    @apply font-display text-2xl font-bold text-foreground mt-10 mb-4;
+    @apply font-anton text-3xl text-foreground mt-10 mb-4;
   }
   .prose-blog h3 {
-    @apply font-display text-xl font-semibold text-foreground mt-8 mb-3;
+    @apply font-display text-xl font-bold text-foreground mt-8 mb-3;
   }
   .prose-blog p {
     @apply text-muted-foreground mb-4 leading-relaxed;
@@ -120,6 +202,6 @@
     @apply bg-secondary text-foreground px-1.5 py-0.5 rounded text-sm;
   }
   .prose-blog blockquote {
-    @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground my-6;
+    @apply border-l-4 border-primary/40 pl-4 italic text-muted-foreground my-6;
   }
 }

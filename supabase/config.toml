@@ -1,15 +1,9 @@
-project_id = "xtjjiqabyaddmsyielne"
+project_id = "fwztabkbhjmnluqaryml"
 
-[functions.generate-blog-image]
-verify_jwt = false
-
-[functions.auto-generate-blog]
-verify_jwt = false
+[auth]
+enable_signup = false
 
 [functions.subscribe]
-verify_jwt = false
-
-[functions.auto-generate-portfolio]
 verify_jwt = false
 
 [functions.admin-analytics]
@@ -18,5 +12,5 @@ verify_jwt = false
 [functions.send-notification]
 verify_jwt = false
 
-[functions.admin-login]
+[functions.get-download]
 verify_jwt = false

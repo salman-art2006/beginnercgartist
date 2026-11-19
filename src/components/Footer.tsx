@@ -1,4 +1,8 @@
-const InstagramIcon = ({ className }: { className?: string }) => (
+import { Link } from "react-router-dom";
+import Logo from "@/components/Logo";
+import JoinButton from "@/components/JoinButton";
+
+const InstagramIcon =({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -27,34 +31,76 @@ const GumroadIcon = ({ className }: { className?: string }) => (
 
 const socials = [
   { icon: InstagramIcon, label: "Instagram", href: "https://www.instagram.com/beginnercg_artist/" },
-  { icon: YoutubeIcon, label: "YouTube", href: "https://www.youtube.com/channel/UC7CvfvvGI6ipO3rMd3dlX9Q" },
+  { icon: YoutubeIcon, label: "YouTube", href: "https://www.youtube.com/@BeginnerCGArtist" },
   { icon: ArtStationIcon, label: "ArtStation", href: "https://www.artstation.com/beginnercgartist" },
   { icon: GumroadIcon, label: "Gumroad", href: "https://beginnercgartist.gumroad.com/" },
 ];
 
+const explore = [
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Tutorials", href: "/tutorials" },
+  { label: "Library", href: "/library" },
+  { label: "Workflow", href: "/workflow" },
+  { label: "Blog", href: "/blog" },
+];
+
+const company = [
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
+
 const Footer = () => (
-  <footer className="border-t border-border py-10">
-    <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <a href="/" className="font-display text-lg font-bold text-gradient-gold">
-        Beginner CG Artist
-      </a>
-      <div className="flex items-center gap-5">
-        {socials.map((s) => (
-          <a
-            key={s.label}
-            href={s.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={s.label}
-            className="text-muted-foreground hover:text-primary transition-colors"
-          >
-            <s.icon className="w-5 h-5" />
-          </a>
-        ))}
+  <footer className="border-t border-border bg-card/40">
+    <div className="container mx-auto px-6 py-14 grid gap-10 md:grid-cols-12">
+      <div className="md:col-span-5">
+        <Logo size="lg" />
+        <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground font-body">
+          Realistic, cinematic Blender environments, and how to build them step by step. Made in Blender, no AI.
+        </p>
+        <div className="mt-6"><JoinButton size="md" /></div>
+        <div className="mt-5 flex items-center gap-3">
+          {socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+            >
+              <s.icon className="w-[18px] h-[18px]" />
+            </a>
+          ))}
+        </div>
       </div>
-      <p className="text-muted-foreground/50 text-sm font-body">
-        © {new Date().getFullYear()} Beginner CG Artist. Built with passion.
-      </p>
+
+      <nav aria-label="Explore" className="md:col-span-3 md:col-start-7">
+        <p className="eyebrow mb-4">Explore</p>
+        <ul className="space-y-3">
+          {explore.map((l) => (
+            <li key={l.label}>
+              <Link to={l.href} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">{l.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Company" className="md:col-span-3">
+        <p className="eyebrow mb-4">Site</p>
+        <ul className="space-y-3">
+          {company.map((l) => (
+            <li key={l.label}>
+              <Link to={l.href} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">{l.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+    <div className="border-t border-border">
+      <div className="container mx-auto px-6 py-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs text-muted-foreground font-body">© {new Date().getFullYear()} Salman · Beginner CG Artist</p>
+        <p className="text-xs text-muted-foreground font-body">beginnercgartist.com</p>
+      </div>
     </div>
   </footer>
 );

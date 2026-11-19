@@ -90,19 +90,19 @@ const SubscribeForm = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-gradient-gold text-primary-foreground font-display font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity shadow-glow flex items-center justify-center gap-2 disabled:opacity-50"
+        className="w-full bg-brand text-brand-foreground font-display font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity shadow-glow flex items-center justify-center gap-2 disabled:opacity-50"
       >
         {isLoading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
           <>
             <Download className="w-5 h-5" />
-            Access Project Files
+            Join the list
           </>
         )}
       </button>
 
-      <p className="text-muted-foreground/50 text-xs font-body text-center mt-4">
+      <p className="text-muted-foreground text-xs font-body text-center mt-4">
         No spam. Unsubscribe anytime. Your data stays safe.
       </p>
     </form>

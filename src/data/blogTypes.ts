@@ -20,6 +20,7 @@ export const BLOG_CATEGORIES = [
   "Tips",
   "Resources",
   "Project Breakdown",
+  "Journey",
 ] as const;
 
 export type BlogCategory = (typeof BLOG_CATEGORIES)[number];

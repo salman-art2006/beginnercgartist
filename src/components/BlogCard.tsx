@@ -1,83 +1,25 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
 import type { BlogPost } from "@/data/blogTypes";
 
-interface Props {
-  post: BlogPost;
-  index: number;
-  isInView: boolean;
-}
+export const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 
-const BlogCard = ({ post, index, isInView }: Props) => {
-  const date = new Date(post.publishedAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      className="group bg-card border border-border rounded-xl overflow-hidden shadow-card hover:border-primary/30 transition-colors flex flex-col"
-    >
-      {/* Image */}
-      <div className="relative aspect-[16/9] overflow-hidden">
-        <img
-          src={post.featuredImage}
-          alt={post.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-        />
-        <span className="absolute top-3 left-3 bg-primary/90 text-primary-foreground text-xs font-display tracking-wider uppercase px-3 py-1 rounded-full">
-          {post.category}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        <div className="flex items-center gap-4 text-muted-foreground text-xs font-body mb-3">
-          <span className="flex items-center gap-1">
-            <Calendar className="w-3.5 h-3.5" />
-            {date}
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" />
-            {post.readTimeMinutes} min read
-          </span>
-        </div>
-
-        <h3 className="font-display text-lg font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-          {post.title}
-        </h3>
-
-        <p className="text-muted-foreground text-sm font-body leading-relaxed mb-4 line-clamp-3 flex-1">
-          {post.excerpt}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {post.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="text-xs font-body text-secondary-foreground bg-secondary px-2 py-0.5 rounded border border-border"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <Link
-          to={`/blog/${post.slug}`}
-          className="flex items-center gap-1.5 text-primary text-sm font-display font-medium hover:gap-3 transition-all"
-        >
-          Read More <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
-    </motion.article>
-  );
-};
+const BlogCard = ({ post, large = false }: { post: BlogPost; large?: boolean }) => (
+  <Link to={`/blog/${post.slug}`} className={`group block ${large ? "lg:grid lg:grid-cols-12 lg:items-center lg:gap-10" : ""}`}>
+    <div className={`relative overflow-hidden rounded-lg border border-border bg-secondary ${large ? "lg:col-span-7" : ""}`}>
+      {post.featuredImage ? (
+        <img src={post.featuredImage} alt={post.title} width={1280} height={720} loading="lazy" className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+      ) : (
+        <div className="aspect-video w-full" />
+      )}
+      <span className="chip absolute left-3 top-3">{post.category}</span>
+    </div>
+    <div className={large ? "mt-6 lg:col-span-5 lg:mt-0" : "mt-4"}>
+      <p className="eyebrow">{formatDate(post.publishedAt)} · {post.readTimeMinutes} min read</p>
+      <h3 className={`mt-2 font-bold leading-snug text-foreground transition-colors group-hover:text-primary ${large ? "text-2xl md:text-3xl" : "text-lg"}`}>{post.title}</h3>
+      {post.excerpt && <p className={`mt-3 leading-relaxed text-muted-foreground font-body ${large ? "text-base" : "line-clamp-2 text-sm"}`}>{post.excerpt}</p>}
+    </div>
+  </Link>
+);
 
 export default BlogCard;

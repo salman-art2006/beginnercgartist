@@ -1,14 +1,14 @@
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowLeft, ArrowUpRight, Loader2 } from "lucide-react";
 import Layout from "@/components/Layout";
 import PageMeta from "@/components/PageMeta";
 import { tutorialService } from "@/services/tutorialService";
-import { useQuery } from "@tanstack/react-query";
-import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowLeft, Clock, BarChart3, Loader2, BookOpen } from "lucide-react";
+
+const youtubeId = (url?: string) => url?.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/)?.[1];
 
 const TutorialDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-
   const { data: tutorial, isLoading } = useQuery({
     queryKey: ["tutorial", slug],
     queryFn: () => tutorialService.getBySlug(slug!),
@@ -16,60 +16,90 @@ const TutorialDetail = () => {
   });
 
   if (isLoading) {
-    return <Layout><div className="flex justify-center items-center min-h-[60vh]"><Loader2 className="w-8 h-8 text-primary animate-spin" /></div></Layout>;
+    return <Layout><div className="flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div></Layout>;
   }
 
   if (!tutorial) {
     return (
       <Layout>
-        <PageMeta title="Tutorial Not Found" description="" path={`/tutorials/${slug}`} />
-        <div className="pt-28 pb-24 text-center">
-          <h1 className="font-display text-3xl font-bold text-foreground mb-4">Tutorial Not Found</h1>
-          <Link to="/tutorials" className="text-primary font-display hover:underline">← Back to Tutorials</Link>
+        <PageMeta title="Tutorial not found" description="This tutorial does not exist." path={`/tutorials/${slug}`} />
+        <div className="pt-44 pb-32 text-center">
+          <h1 className="text-5xl">Tutorial not found</h1>
+          <Link to="/tutorials" className="mt-6 inline-block font-bold text-primary hover:underline">Back to tutorials</Link>
         </div>
       </Layout>
     );
   }
 
+  const vid = youtubeId(tutorial.videoUrl);
+
   return (
     <Layout>
-      <PageMeta title={tutorial.title} description={tutorial.description} path={`/tutorials/${tutorial.slug}`} />
+      <PageMeta
+        title={tutorial.title}
+        description={tutorial.description}
+        path={`/tutorials/${tutorial.slug}`}
+        image={tutorial.thumbnail.startsWith("http") ? tutorial.thumbnail : undefined}
+        jsonLd={
+          vid
+            ? {
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                name: tutorial.title,
+                description: tutorial.description,
+                thumbnailUrl: `https://img.youtube.com/vi/${vid}/maxresdefault.jpg`,
+                embedUrl: `https://www.youtube.com/embed/${vid}`,
+              }
+            : undefined
+        }
+      />
+      <article className="pt-36 pb-24 lg:pt-44">
+        <div className="container mx-auto max-w-4xl px-6">
+          <Link to="/tutorials" className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground">
+            <ArrowLeft className="h-4 w-4" /> All tutorials
+          </Link>
+          <div className="mb-5 flex flex-wrap items-center gap-3">
+            <span className="chip">{tutorial.difficulty}</span>
+            <span className="eyebrow">{tutorial.category}{tutorial.durationMinutes > 0 ? ` · ${tutorial.durationMinutes} min` : ""}</span>
+          </div>
+          <h1 className="text-[clamp(2.25rem,6vw,4.5rem)] leading-[0.98]">{tutorial.title}</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground font-body">{tutorial.description}</p>
 
-      <article className="pt-28 pb-16">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
-            <Link to="/tutorials" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-body mb-8 transition-colors">
-              <ArrowLeft className="w-4 h-4" /> Back to Tutorials
-            </Link>
-          </motion.div>
-
-          <motion.header initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="bg-primary/90 text-primary-foreground text-xs font-display tracking-wider uppercase px-3 py-1 rounded-full">{tutorial.category}</span>
-              <span className="text-xs text-muted-foreground font-body flex items-center gap-1"><BarChart3 className="w-3 h-3" /> {tutorial.difficulty}</span>
-              <span className="text-xs text-muted-foreground font-body flex items-center gap-1"><Clock className="w-3 h-3" /> {tutorial.durationMinutes} min</span>
+          {vid && (
+            <div className="mt-10 aspect-video overflow-hidden rounded-lg border border-border bg-black shadow-card">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${vid}`}
+                title={tutorial.title}
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full"
+              />
             </div>
-            <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4 leading-tight">{tutorial.title}</h1>
-            <p className="text-muted-foreground font-body text-lg mb-8">{tutorial.description}</p>
-          </motion.header>
-
-          {tutorial.videoUrl && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="rounded-xl overflow-hidden border border-border shadow-card mb-10 aspect-video">
-              <iframe src={tutorial.videoUrl} className="w-full h-full" allowFullScreen title={tutorial.title} />
-            </motion.div>
           )}
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="prose-blog" dangerouslySetInnerHTML={{ __html: tutorial.content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "") }} />
+          {tutorial.content && tutorial.content !== tutorial.description && (
+            <div className="prose-blog mt-10 whitespace-pre-line">{tutorial.content}</div>
+          )}
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="mt-12 bg-card border border-border rounded-xl p-8 text-center shadow-card">
-            <BookOpen className="w-8 h-8 text-primary mx-auto mb-3" />
-            <h3 className="font-display text-xl font-semibold text-foreground mb-2">Keep Learning</h3>
-            <p className="text-muted-foreground font-body text-sm mb-4">Explore more tutorials and download project files to practice.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/tutorials" className="bg-gradient-gold text-primary-foreground font-display font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-glow inline-block">More Tutorials</Link>
-              <Link to="/resources" className="border border-border text-foreground font-display font-medium px-6 py-3 rounded-lg hover:bg-secondary transition-colors inline-block">Get Project Files</Link>
-            </div>
-          </motion.div>
+          {tutorial.tags.length > 0 && (
+            <ul className="mt-8 flex flex-wrap gap-2">
+              {tutorial.tags.map((t) => (
+                <li key={t} className="rounded-md border border-border px-3 py-1.5 text-xs font-bold text-muted-foreground">{t}</li>
+              ))}
+            </ul>
+          )}
+
+          <div className="mt-14 flex flex-col gap-3 border-t border-border pt-10 sm:flex-row">
+            {tutorial.videoUrl && (
+              <a href={tutorial.videoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-md bg-brand px-6 py-3.5 font-bold text-brand-foreground hover:opacity-90">
+                Watch on YouTube <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+            <Link to="/library" className="inline-flex items-center justify-center rounded-md border border-foreground/30 px-6 py-3.5 font-bold text-foreground hover:bg-secondary">
+              Get project files
+            </Link>
+          </div>
         </div>
       </article>
     </Layout>

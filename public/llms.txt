@@ -1,26 +1,64 @@
-# Beginner CG Artist — 3D Environment Artist
+# Beginner CG Artist
 
-> Independent 3D environment artist creating cinematic digital worlds in Blender. Specialising in photoreal scenes, lighting, and procedural techniques.
+> Realistic, cinematic Blender environments, and how to build them step by step. Run by Salman, a Blender environment artist with 2+ years of experience. Everything is made by hand in Blender (Cycles), no AI. Tutorials, project files and scene packs.
 
-Beginner CG Artist is a portfolio and educational resource site for Blender 3D environment art. The site is run by a solo artist sharing workflows, tutorials, and downloadable project files with the community.
+Site: https://beginnercgartist.com
+YouTube: https://www.youtube.com/@BeginnerCGArtist
+Instagram: https://www.instagram.com/beginnercg_artist/
+ArtStation: https://www.artstation.com/beginnercgartist
+Gumroad: https://beginnercgartist.gumroad.com/
 
-## Content
+## About
+- [About Salman](https://beginnercgartist.com/about): who makes this site, tools used (Blender 5.2, Cycles, Geometry Nodes, DaVinci Resolve, Photopea, OctaSpace cloud rendering) and what the work focuses on.
+- [Contact](https://beginnercgartist.com/contact): custom environment work, collaborations, kit requests, Blender help.
 
-- [Portfolio](/portfolio) — Showcase of completed 3D environment renders with full workflow breakdowns, tools used, and technical specs
-- [Blog](/blog) — In-depth articles on Blender techniques, environment art workflows, lighting, materials, and scene composition
-- [Tutorials](/tutorials) — Step-by-step learning guides for beginners through advanced artists
-- [Resources](/resources) — Curated collection of free tools, assets, and references for 3D artists
-- [Workflow](/workflow) — Documented end-to-end environment art process from concept to final render
-- [About](/about) — Background on the artist and the mission of Beginner CG Artist
+## Tutorials
+- [How to Create a Realistic Abandoned Gas Station in Blender](https://beginnercgartist.com/tutorials/realistic-abandoned-gas-station): A full environment tutorial: build a realistic abandoned gas station from scratch.
+- [Mistwood Giants: Giant Fantasy Forest Breakdown](https://beginnercgartist.com/tutorials/giant-fantasy-forest-breakdown): How the giant fantasy forest environment was made in Blender.
+- [Fantasy Library Environment Breakdown](https://beginnercgartist.com/tutorials/fantasy-library-breakdown): A breakdown of the fantasy library scene, rendered with OctaSpace.
+- [How to Post Process Blender Renders for FREE](https://beginnercgartist.com/tutorials/post-process-blender-renders-photopea): Finish your renders for free using Photopea.
+- [Free Procedural Vine Generator Add-on for Blender](https://beginnercgartist.com/tutorials/procedural-vine-generator-addon): Installation and a tutorial for the free Procedural Vine Generator add-on.
+- [10 Blender Tips & Tricks Every Beginner Should Know](https://beginnercgartist.com/tutorials/10-blender-tips-for-beginners): Ten practical tips that make working in Blender faster.
+- [How to Make a Realistic Flag Animation in Blender in 2 Minutes](https://beginnercgartist.com/tutorials/realistic-flag-animation-2-minutes): A quick beginner tutorial for a realistic waving flag.
 
-## Topics Covered
+## Portfolio
+- [Frog Island](https://beginnercgartist.com/portfolio/frog-island): Two giant stone frogs guard a waterfall pond. Viewport to final Cycles render.
+- [Abandoned Gas Station](https://beginnercgartist.com/portfolio/abandoned-gas-station): A realistic roadside gas station, built from scratch with a full tutorial.
+- [Mistwood Giants](https://beginnercgartist.com/portfolio/mistwood-giants): A giant fantasy forest environment with a full breakdown.
+- [Fantasy Library](https://beginnercgartist.com/portfolio/fantasy-library): An interior fantasy library environment, rendered on a cloud GPU.
+- [Dreamy Sunflower Field](https://beginnercgartist.com/portfolio/dreamy-sunflower-field): A sunflower field with a farmhouse, made in Blender 5.2 with Cycles.
+- [Fantasy Environment](https://beginnercgartist.com/portfolio/fantasy-environment-timelapse): A fantasy environment from empty scene to final render, as a timelapse.
+- [Dreamy Hilltop Morning](https://beginnercgartist.com/portfolio/dreamy-hilltop-morning): A semi-realistic hilltop morning with a slow cinematic camera move.
+- [Abandoned Farm](https://beginnercgartist.com/portfolio/abandoned-farm): Abandoned Farm Environment – Cinematic Blender Scene. The scene file is available on Gumroad.
+- [Lakeside Mountain Monastery](https://beginnercgartist.com/portfolio/lakeside-mountain-monastery): Lakeside Mountain Monastery – Cinematic 3D Environment. The scene file is available on Gumroad.
+- [Forgotten Tracks](https://beginnercgartist.com/portfolio/forgotten-tracks): Forgotten Tracks – Hyper Realistic Forest Environment (Blender). The scene file is available on Gumroad.
+- [Dark Fantasy Castle](https://beginnercgartist.com/portfolio/dark-fantasy-castle): Dark Fantasy Castle Environment. The scene file is available on Gumroad.
 
-Blender, environment art, 3D rendering, Cycles, EEVEE, procedural materials, shader nodes, geometry nodes, vegetation scattering, cinematic lighting, HDRI, volumetrics, PBR texturing, UV unwrapping, Blender addons, render optimisation, portfolio building for 3D artists
+## Library (free and paid Blender files)
+- [Procedural Vine Generator – Blender Add-on](https://beginnercgartist.com/library): free. Procedural Vine Generator – Blender Add-on. Free Blender file by Beginner CG Artist. Subscribe with your email to unlock the download.
+- [Dreamy Village House – Realistic Environment (Blender)](https://beginnercgartist.com/library): paid, From $10. Dreamy Village House – Realistic Environment (Blender). A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $10.
+- [Dreamy Hillside Path – Blender Environment](https://beginnercgartist.com/library): paid, From $6. Dreamy Hillside Path – Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $6.
+- [Whispering Meadows – Blender Environment](https://beginnercgartist.com/library): paid, From $7. Whispering Meadows – Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $7.
+- [Dreamy Flower Meadow – Blender Environment](https://beginnercgartist.com/library): paid, From $5. Dreamy Flower Meadow – Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $5.
+- [Free Sculpted Terrain + Frog Statue – Blender Files](https://beginnercgartist.com/library): free. Free Sculpted Terrain + Frog Statue – Blender Files. Free Blender file by Beginner CG Artist. Subscribe with your email to unlock the download.
+- [Forgotten Library – Cinematic Fantasy Environment (Blender)](https://beginnercgartist.com/library): paid, From $15. Forgotten Library – Cinematic Fantasy Environment (Blender). A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $15.
+- [Sunflower Field – Blender Environment](https://beginnercgartist.com/library): paid, From $9. Sunflower Field – Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $9.
+- [Abandoned Gas Station – Realistic Forest Environment (Blender)](https://beginnercgartist.com/library): paid, From $8. Abandoned Gas Station – Realistic Forest Environment (Blender). A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $8.
+- [Mystic Portal – Free Blender Environment](https://beginnercgartist.com/library): free. Mystic Portal – Free Blender Environment. Free Blender file by Beginner CG Artist. Subscribe with your email to unlock the download.
+- [Mystic Frog Sanctuary– Blender Environment](https://beginnercgartist.com/library): paid, From $10. Mystic Frog Sanctuary– Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $10.
+- [Dark Fantasy Castle Environment](https://beginnercgartist.com/library): paid, From $8. Dark Fantasy Castle Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $8.
+- [Ancient Ruins Temple – Blender Environment](https://beginnercgartist.com/library): paid, From $6. Ancient Ruins Temple – Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $6.
+- [Abandoned Church Environment | Blender Scene](https://beginnercgartist.com/library): paid, From $8. Abandoned Church Environment | Blender Scene. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $8.
+- [Lakeside Mountain Monastery – Cinematic 3D Environment](https://beginnercgartist.com/library): paid, From $10. Lakeside Mountain Monastery – Cinematic 3D Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $10.
+- [Ethereal Gate - Blender Environment](https://beginnercgartist.com/library): paid, From $2. Ethereal Gate - Blender Environment. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $2.
+- [Abandoned Farmland – Golden Hour Environment (Blender)](https://beginnercgartist.com/library): paid, From $10. Abandoned Farmland – Golden Hour Environment (Blender). A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $10.
+- [Forgotten Tracks – Hyper Realistic Forest Environment (Blender)](https://beginnercgartist.com/library): paid, From $10. Forgotten Tracks – Hyper Realistic Forest Environment (Blender). A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $10.
+- [Abandoned Farm Environment – Cinematic Blender Scene](https://beginnercgartist.com/library): paid, From $10. Abandoned Farm Environment – Cinematic Blender Scene. A Blender scene file by Beginner CG Artist, sold on Gumroad. Pay what you want, from $10.
 
-## Audience
+## Blog
+- [How I Started in Blender, and Where I Am Now](https://beginnercgartist.com/blog/how-i-started-in-blender-and-where-i-am-now): A short, honest look at two-plus years of learning Blender, why I focus on environments, and what I am working on today.
+- [What I Am Working On Next: Goals for the Channel and the Library](https://beginnercgartist.com/blog/whats-next-goals-for-the-channel-and-library): The plan for the coming months: more realistic environments, kits and shader packs, free starter files, and a steady upload schedule.
+- [What You Get When You Join the List](https://beginnercgartist.com/blog/what-you-get-when-you-join-the-list): What the list includes, what it does not, and how your details are handled. Short and clear.
 
-Beginner to intermediate 3D artists learning environment art in Blender. Artists looking for free project files, scene breakdowns, and practical workflow guides.
-
-## Contact
-
-Available via the contact form at /contact
+## Topics
+Blender, environment art, realistic environments, Cycles rendering, procedural materials, Geometry Nodes, vegetation scattering, cinematic lighting, volumetrics, post-processing, Blender add-ons, project files.

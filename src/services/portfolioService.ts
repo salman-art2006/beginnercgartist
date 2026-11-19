@@ -16,6 +16,7 @@ export interface PortfolioProject {
   resolution?: string;
   downloadFileId?: string;
   downloadFileName?: string;
+  videoUrl?: string;
 }
 
 type PortfolioRow = {
@@ -35,6 +36,7 @@ type PortfolioRow = {
   resolution: string | null;
   download_file_id: string | null;
   download_file_name: string | null;
+  video_url: string | null;
 };
 
 type WorkflowStep = { title: string; description: string };
@@ -56,6 +58,7 @@ function mapRow(row: PortfolioRow): PortfolioProject {
     resolution: row.resolution ?? undefined,
     downloadFileId: row.download_file_id ?? undefined,
     downloadFileName: row.download_file_name ?? undefined,
+    videoUrl: row.video_url ?? undefined,
   };
 }
 
@@ -68,7 +71,7 @@ export const portfolioService = {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      return (data as PortfolioRow[]).map(mapRow);
+      return (data as unknown as PortfolioRow[]).map(mapRow);
     } catch {
       return [];
     }
@@ -82,7 +85,7 @@ export const portfolioService = {
         .eq("slug", id)
         .maybeSingle();
 
-      if (!error && data) return mapRow(data as PortfolioRow);
+      if (!error && data) return mapRow(data as unknown as PortfolioRow);
     } catch {
       // fall through
     }
@@ -135,17 +138,5 @@ export const portfolioService = {
       .delete()
       .eq("slug", id);
     return !error;
-  },
-
-  async triggerAutoGenerate(): Promise<{ success: boolean; project?: PortfolioProject; error?: string }> {
-    try {
-      const { data, error } = await supabase.functions.invoke("auto-generate-portfolio");
-      if (error) return { success: false, error: error.message };
-      const result = data as { error?: string; project?: PortfolioProject };
-      if (result?.error) return { success: false, error: result.error };
-      return { success: true, project: result?.project };
-    } catch (err) {
-      return { success: false, error: err instanceof Error ? err.message : "Unknown error" };
-    }
   },
 };
