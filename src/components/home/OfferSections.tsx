@@ -54,7 +54,7 @@ export const LibrarySection = () => (
 const services = [
   { icon: Camera, title: "Cinematic environment render", text: "A finished still of a scene built from your brief, rendered in Cycles." },
   { icon: Clapperboard, title: "Environment animation / loop", text: "Slow, weighty camera moves and 4K loops for music channels, intros and stock." },
-  { icon: Gamepad2, title: "Game-style environment", text: "A realistic Blender environment concept or kit for an indie game." },
+  { icon: Gamepad2, title: "Indie game concept art", text: "Concept art for your indie game: realistic or fantasy forest exteriors, made in Blender." },
   { icon: Wrench, title: "Blender scene help", text: "Lighting, render settings, optimisation and fixes for a scene that is not working." },
 ];
 
