@@ -44,7 +44,7 @@ ArtStation: https://www.artstation.com/beginnercgartist
 Gumroad: https://beginnercgartist.gumroad.com/
 
 ## About
-- [About Salman](${SITE_URL}/about): who makes this site, tools used (Blender 5.2, Cycles, Geometry Nodes, DaVinci Resolve, Photopea, OctaSpace cloud rendering) and what the work focuses on.
+- [About Salman](${SITE_URL}/about): who makes this site, tools used (Blender 5.2, Cycles, Geometry Nodes, DaVinci Resolve, Photopea) and what the work focuses on.
 - [Contact](${SITE_URL}/contact): custom environment work, collaborations, kit requests, Blender help.
 
 ## Tutorials

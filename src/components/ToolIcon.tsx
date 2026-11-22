@@ -1,4 +1,4 @@
-import { Aperture, Cloud, Network, type LucideIcon } from "lucide-react";
+import { Aperture, Network, type LucideIcon } from "lucide-react";
 
 export interface Tool {
   name: string;
@@ -7,14 +7,13 @@ export interface Tool {
   icon?: LucideIcon;
 }
 
-// Logos: Simple Icons (CC0). Cycles, Geometry Nodes and OctaSpace have no logo there, so they get plain icons.
+// Logos: Simple Icons (CC0). Cycles and Geometry Nodes have no logo there, so they get plain icons.
 export const TOOLS: Tool[] = [
   { name: "Blender 5.2", mask: "/tools/blender.svg", color: "#E87D0D" },
   { name: "Cycles", icon: Aperture },
   { name: "Geometry Nodes", icon: Network },
   { name: "DaVinci Resolve Studio", mask: "/tools/davinciresolve.svg" },
   { name: "Photopea", mask: "/tools/photopea.svg", color: "#18A497" },
-  { name: "OctaSpace cloud rendering", icon: Cloud },
 ];
 
 export const ToolIcon = ({ tool, className = "h-5 w-5" }: { tool: Tool; className?: string }) => {
