@@ -82,7 +82,7 @@ add({
   route: "/about", title: "About Salman",
   desc: "Salman is a Blender environment artist with 2+ years of experience. He builds realistic, cinematic environments and teaches the full process on YouTube.",
   h1: "Hi, I'm Salman",
-  body: `<p>I'm a Blender environment artist with 2+ years of experience. I build realistic and cinematic scenes, then explain the whole process step by step so you can build them too. Tools: Blender 5.2, Cycles, Geometry Nodes, DaVinci Resolve Studio, Photopea, OctaSpace cloud rendering. Everything is made by hand in Blender, no AI.</p>`,
+  body: `<p>I'm a Blender environment artist with 2+ years of experience. I build realistic and cinematic scenes, then explain the whole process step by step so you can build them too. Tools: Blender 5.2, Cycles, Geometry Nodes, DaVinci Resolve Studio, Photopea. Everything is made by hand in Blender, no AI.</p>`,
   ld: [crumb([["Home", "/"], ["About", "/about"]]), { "@context": "https://schema.org", ...person, alternateName: SITE_NAME, jobTitle: "Blender Environment Artist" }],
 });
 

@@ -15,7 +15,7 @@ export const LibrarySection = () => (
       intro="Start with the free tools. When you want to open a full scene and see exactly how it is built, grab a project file."
       link={{ label: "Open the library", to: "/library" }}
     />
-    <div className="grid gap-5 lg:grid-cols-3">
+    <div className="grid gap-5 md:grid-cols-2">
       <Reveal>
         <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card">
           <img src={thumb("PI3nV4OVzVY")} alt="Procedural Vine Generator add-on for Blender" width={1280} height={720} loading="lazy" className="aspect-video w-full object-cover" />
@@ -45,19 +45,6 @@ export const LibrarySection = () => (
               Browse on Gumroad <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
-        </article>
-      </Reveal>
-
-      <Reveal delay={0.16}>
-        <article className="flex h-full flex-col rounded-lg border border-dashed border-foreground/30 p-6">
-          <span className="chip mb-4 w-fit">Coming soon</span>
-          <h3 className="text-xl font-bold text-foreground">Wild West Town Kit</h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground font-body">
-            A set of ready-to-use buildings and props for realistic western scenes, built for the Wild West tutorial series.
-          </p>
-          <Link to="/contact?topic=Kit%20or%20file%20request" className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-foreground hover:text-primary transition-colors">
-            Ask to be notified <ArrowUpRight className="h-4 w-4" />
-          </Link>
         </article>
       </Reveal>
     </div>

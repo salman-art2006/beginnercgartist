@@ -62,11 +62,10 @@ const posts = [
 <p>Here is what I am working towards, so you know what to expect from the channel and the library.</p>
 
 <h2>More realistic environments</h2>
-<p>Realistic scenes and the tutorials behind them are what viewers respond to most, so they will be the main focus. That includes a Wild West town series, built step by step.</p>
+<p>Realistic scenes and the tutorials behind them are what viewers respond to most, so they will be the main focus.</p>
 
 <h2>Kits and shader packs</h2>
 <ul>
-  <li><strong>Wild West Town Kit:</strong> ready-to-use buildings and props for realistic western scenes.</li>
   <li><strong>Atmosphere and water shaders:</strong> fog and water are two of the topics people ask about most, so I want to package the setups I use.</li>
   <li><strong>One growing collection</strong> rather than many tiny files, so what you buy keeps getting better.</li>
 </ul>

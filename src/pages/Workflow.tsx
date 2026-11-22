@@ -38,7 +38,7 @@ const steps = [
   },
   {
     n: "06", title: "Render and finish",
-    text: "I render in Cycles. Heavy animation scenes go to a cloud GPU. The final look is graded in DaVinci Resolve, and stills are finished in Photopea.",
+    text: "I render in Cycles. The final look is graded in DaVinci Resolve, and stills are finished in Photopea.",
     points: ["Cycles with denoising, passes when needed", "Colour grading and final polish"],
     video: { id: "ltvXyxY9_Xg", label: "Watch: Post-process renders for free" },
   },
@@ -50,7 +50,6 @@ const toolNotes: Record<string, string> = {
   "Geometry Nodes": "Procedural setups for scattering and repeatable details.",
   "DaVinci Resolve Studio": "Editing and colour grading for animations.",
   Photopea: "Free finishing for still renders in the browser.",
-  "OctaSpace cloud rendering": "Cloud GPUs for scenes too heavy to render locally.",
 };
 
 const habits = [
