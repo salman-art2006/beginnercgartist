@@ -243,7 +243,7 @@ const AdminDashboard = () => {
           </div>
 
           <p className="mt-10 text-sm leading-relaxed text-muted-foreground font-body">
-            Website visits are not tracked here. To see traffic, add a Google Analytics 4 ID as <code className="rounded bg-secondary px-1.5 py-0.5">VITE_GA4_ID</code> in the deploy settings.
+            Website visits are not shown on this dashboard. Traffic and where visitors come from (Google, Instagram, YouTube, direct) are in your Google Analytics account, collected through Google Tag Manager.
           </p>
         </>
       )}

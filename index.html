@@ -98,32 +98,21 @@
     }
     </script>
 
-    <!-- ── Google Analytics 4 ────────────────────────────────────── -->
-    <!-- GA4 ID is injected at build time; guard prevents errors when not set -->
-    <script>
-      (function() {
-        var gaId = '%VITE_GA4_ID%';
-        if (!gaId || gaId.indexOf('%') !== -1) return;
-        var s = document.createElement('script');
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
-        s.async = true;
-        document.head.appendChild(s);
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', gaId, {
-          page_path: window.location.pathname,
-          anonymize_ip: true,
-          cookie_flags: 'SameSite=None;Secure'
-        });
-      })();
-    </script>
+    <!-- Google Tag Manager. Google Analytics 4 is configured inside this container, not in the code. -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NN7RN2QD');</script>
+    <!-- End Google Tag Manager -->
 
     <!-- ── Facebook Pixel (add VITE_FB_PIXEL_ID env var to re-enable) ── -->
   </head>
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NN7RN2QD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
